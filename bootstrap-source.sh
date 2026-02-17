@@ -26,5 +26,3 @@ if [ -e "$GHOSTTY_TARGET" ] || [ -L "$GHOSTTY_TARGET" ]; then
   mv "$GHOSTTY_TARGET" "$BACKUP/"
 fi
 ln -sfn "$REPO/config/ghostty/config" "$GHOSTTY_TARGET"
-
-git config --global core.excludesFile "$HOME/.config/git/ignore"

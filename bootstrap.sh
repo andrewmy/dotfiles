@@ -28,7 +28,6 @@ link "$DOTFILES_DIR/config/git/ignore" "$HOME/.config/git/ignore"
 link "$DOTFILES_DIR/config/ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
 
 ln -sfn "$HOME/.config/git/ignore" "$HOME/.gitignore"
-git config --global core.excludesFile "$HOME/.config/git/ignore"
 
 if [[ ! -f "$HOME/.zsh_secrets" ]]; then
   echo "Create $HOME/.zsh_secrets manually (not in git)."
