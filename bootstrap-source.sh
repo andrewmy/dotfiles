@@ -19,4 +19,12 @@ ln -sfn "$REPO/config/nvim" "$HOME/.config/nvim"
 
 ln -sfn "$REPO/config/git/ignore" "$HOME/.config/git/ignore"
 ln -sfn "$HOME/.config/git/ignore" "$HOME/.gitignore"
+
+GHOSTTY_TARGET="$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+mkdir -p "$(dirname "$GHOSTTY_TARGET")"
+if [ -e "$GHOSTTY_TARGET" ] || [ -L "$GHOSTTY_TARGET" ]; then
+  mv "$GHOSTTY_TARGET" "$BACKUP/"
+fi
+ln -sfn "$REPO/config/ghostty/config" "$GHOSTTY_TARGET"
+
 git config --global core.excludesFile "$HOME/.config/git/ignore"

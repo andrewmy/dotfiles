@@ -24,6 +24,9 @@ done
 link "$DOTFILES_DIR/config/nvim" "$HOME/.config/nvim"
 link "$DOTFILES_DIR/config/htop/htoprc" "$HOME/.config/htop/htoprc"
 link "$DOTFILES_DIR/config/git/ignore" "$HOME/.config/git/ignore"
+
+link "$DOTFILES_DIR/config/ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+
 ln -sfn "$HOME/.config/git/ignore" "$HOME/.gitignore"
 git config --global core.excludesFile "$HOME/.config/git/ignore"
 
