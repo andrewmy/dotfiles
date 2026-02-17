@@ -1,0 +1,41 @@
+[include]
+    path = ~/.gitconfig.local
+
+[init]
+	defaultBranch = main
+
+[push]
+	autoSetupRemote = true
+
+[rebase]
+  autoStash = true
+
+[rerere]
+  enabled = true
+
+[merge]
+	conflictStyle = zdiff3
+
+[core]
+  fileMode = true
+  excludesFile = ~/.config/git/ignore
+
+[log]
+  decorate = short
+
+[fetch]
+  prune = true
+
+[diff]
+  colorMoved = zebra
+
+[alias]
+  st = status
+  co = checkout
+  br = branch
+  ci = commit
+  amend = commit --amend --no-edit
+  unstage = reset HEAD --
+  last = log -1 HEAD
+  lg = log --graph --oneline --decorate --all
+
