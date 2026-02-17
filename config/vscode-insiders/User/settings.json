@@ -1,0 +1,13 @@
+{
+  "window.autoDetectColorScheme": true,
+  "editor.largeFileOptimizations": false,
+  "workbench.editorAssociations": {
+    "*.md": "milkdown.editor"
+  },
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  }
+}

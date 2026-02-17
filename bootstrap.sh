@@ -22,10 +22,20 @@ for f in .zshrc .zprofile .zshenv .p10k.zsh .gitconfig; do
 done
 
 link "$DOTFILES_DIR/config/nvim" "$HOME/.config/nvim"
+link "$DOTFILES_DIR/config/mc" "$HOME/.config/mc"
 link "$DOTFILES_DIR/config/htop/htoprc" "$HOME/.config/htop/htoprc"
 link "$DOTFILES_DIR/config/git/ignore" "$HOME/.config/git/ignore"
 
 link "$DOTFILES_DIR/config/ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+link "$DOTFILES_DIR/config/vscode-insiders/User/settings.json" "$HOME/Library/Application Support/Code - Insiders/User/settings.json"
+
+if [[ -f "$DOTFILES_DIR/config/vscode-insiders/User/keybindings.json" ]]; then
+  link "$DOTFILES_DIR/config/vscode-insiders/User/keybindings.json" "$HOME/Library/Application Support/Code - Insiders/User/keybindings.json"
+fi
+
+if [[ -d "$DOTFILES_DIR/config/vscode-insiders/User/snippets" ]]; then
+  link "$DOTFILES_DIR/config/vscode-insiders/User/snippets" "$HOME/Library/Application Support/Code - Insiders/User/snippets"
+fi
 
 ln -sfn "$HOME/.config/git/ignore" "$HOME/.gitignore"
 
