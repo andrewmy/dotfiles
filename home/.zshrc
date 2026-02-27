@@ -104,7 +104,9 @@ alias serena='uvx --from git+https://github.com/oraios/serena serena'
 alias top=mactop
 alias cat=bat
 alias vim=nvim
-alias ll="ls -lah"
+alias ls=eza
+alias du=ncdu
+alias ll="ls --color=auto -h -H --group-directories-first --time-style=long-iso -l"
 alias serena_sse="uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context codex --project $(pwd) --transport streamable-http --port 9121"
 
 zstyle ':completion:*' menu select
