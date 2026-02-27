@@ -58,7 +58,6 @@ lunchy() {
     command lunchy "$@"
 }
 
-export LANG="en_US.UTF-8"
 export DOCKER_BUILDKIT=1
 
 git_just_pull() {
