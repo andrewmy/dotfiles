@@ -38,8 +38,10 @@ This creates a backup directory like `~/.dotfiles-backup-YYYYMMDD-HHMMSS`.
 
 These files are expected to be created manually on each machine:
 
-- `~/.zsh_secrets`
-  - Shell secrets and machine-local exports (tokens, private env vars)
+- `~/.zshrc.local`
+  - Machine-local aliases, functions, and interactive shell config
+- `~/.zshenv.local`
+  - Machine-local environment variables (tokens, private env vars)
 - `~/.gitconfig.local`
   - Git identity and personal overrides
   - Example:

@@ -21,6 +21,8 @@ path=(
     $path
 )
 export PATH
+# in a .zshrc.local file:
+# path=("$HOME/some/bin" $path)
 
 fpath=("$HOME/.zsh/comp" $fpath)
 autoload -Uz compinit && compinit
@@ -96,10 +98,6 @@ git_just_pull() {
     fi
 }
 
-if [[ -r "$HOME/.zsh_secrets" ]]; then
-    source "$HOME/.zsh_secrets"
-fi
-
 alias phpqa='docker run --init -it --rm -v $(pwd):/project -v $(pwd)/tmp-phpqa:/tmp -w /project jakzal/phpqa:alpine'
 alias stern-prod='stern --namespace prod --kubeconfig ~/.kube/awsconfig-prod'
 alias serena='uvx --from git+https://github.com/oraios/serena serena'
@@ -119,3 +117,8 @@ zstyle ':completion:*' matcher-list \
 
 setopt hist_ignore_dups share_history inc_append_history extended_history
 WORDCHARS=${WORDCHARS/\/}
+
+(( $+commands[rbenv] )) && eval "$(rbenv init - zsh)"
+
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
