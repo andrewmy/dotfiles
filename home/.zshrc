@@ -118,6 +118,7 @@ zstyle ':completion:*' matcher-list \
     'l:|=* r:|=*'
 
 setopt hist_ignore_dups share_history inc_append_history extended_history
+# Remove / from word characters so Ctrl+W and Alt+B/F stop at path separators
 WORDCHARS=${WORDCHARS/\/}
 
 (( $+commands[rbenv] )) && eval "$(rbenv init - zsh)"

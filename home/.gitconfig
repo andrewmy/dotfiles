@@ -38,3 +38,5 @@
   unstage = reset HEAD --
   last = log -1 HEAD
   lg = log --graph --oneline --decorate --all
+  wdiff = diff --color-words
+
