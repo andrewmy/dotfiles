@@ -48,6 +48,8 @@ cursor-style = bar
 
 background-opacity = 0.8
 background-blur = 7
+theme = light:Builtin Light,dark:Builtin Dark
+window-theme = system
 
 window-height = 60
 keybind = shift+enter=text:\x1b\r
