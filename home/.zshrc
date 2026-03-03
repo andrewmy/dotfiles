@@ -121,7 +121,10 @@ setopt hist_ignore_dups share_history inc_append_history extended_history
 # Remove / from word characters so Ctrl+W and Alt+B/F stop at path separators
 WORDCHARS=${WORDCHARS/\/}
 
-(( $+commands[rbenv] )) && eval "$(rbenv init - zsh)"
+if (( $+commands[rv] )); then
+    eval "$(/opt/homebrew/bin/rv shell init zsh)"
+    eval "$(/opt/homebrew/bin/rv shell completions zsh)"
+fi
 
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
