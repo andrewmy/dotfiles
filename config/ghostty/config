@@ -44,6 +44,8 @@
 
 keybind = global:ctrl+grave_accent=toggle_quick_terminal
 
+macos-option-as-alt = left
+
 cursor-style = bar
 
 background-opacity = 0.8
