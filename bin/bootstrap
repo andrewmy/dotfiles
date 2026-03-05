@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES_BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=common.sh
+source "$DOTFILES_BIN_DIR/common.sh"
+
+bootstrap_packages() {
+  if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
+    if ! xcode-select -p >/dev/null 2>&1; then
+      xcode-select --install
+      echo "Install Command Line Tools, then re-run ./bin/bootstrap"
+      exit 1
+    fi
+
+    if ! command -v brew >/dev/null 2>&1; then
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+
+    eval "$(/opt/homebrew/bin/brew shellenv || /usr/local/bin/brew shellenv)"
+    brew bundle --file="$DOTFILES_ROOT/Brewfile"
+  else
+    echo "Skipping package bootstrap for linux (no package manager configured)."
+  fi
+}
+
+link() { mkdir -p "$(dirname "$2")"; ln -sfn "$1" "$2"; }
+
+resolve_target
+set_platform_paths
+bootstrap_packages
+
+for f in .zshrc .zprofile .zshenv .p10k.zsh .gitconfig; do
+  link "$DOTFILES_ROOT/home/$f" "$HOME/$f"
+done
+
+link "$DOTFILES_ROOT/config/nvim" "$HOME/.config/nvim"
+link "$DOTFILES_ROOT/config/mc" "$HOME/.config/mc"
+link "$DOTFILES_ROOT/config/htop/htoprc" "$HOME/.config/htop/htoprc"
+link "$DOTFILES_ROOT/config/git/ignore" "$HOME/.config/git/ignore"
+
+link "$DOTFILES_ROOT/config/ghostty/config" "$DOTFILES_GHOSTTY_CONFIG_PATH"
+link "$DOTFILES_ROOT/config/vscode-insiders/User/settings.json" "$DOTFILES_VSCODE_USER_DIR/settings.json"
+
+if [[ -f "$DOTFILES_ROOT/config/vscode-insiders/User/keybindings.json" ]]; then
+  link "$DOTFILES_ROOT/config/vscode-insiders/User/keybindings.json" "$DOTFILES_VSCODE_USER_DIR/keybindings.json"
+fi
+
+if [[ -d "$DOTFILES_ROOT/config/vscode-insiders/User/snippets" ]]; then
+  link "$DOTFILES_ROOT/config/vscode-insiders/User/snippets" "$DOTFILES_VSCODE_USER_DIR/snippets"
+fi
+
+ln -sfn "$HOME/.config/git/ignore" "$HOME/.gitignore"
+
+if [[ ! -f "$HOME/.zsh_secrets" ]]; then
+  echo "Create $HOME/.zsh_secrets manually (not in git)."
+fi
