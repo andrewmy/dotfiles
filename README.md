@@ -27,7 +27,7 @@ exec zsh
 You can override with `DOTFILES_TARGET=darwin` or `DOTFILES_TARGET=linux`.
 
 On macOS, it bootstraps Xcode Command Line Tools + Homebrew and runs `brew bundle`.
-On Linux, package bootstrap is skipped for now, but Powerlevel10k is installed manually and symlinks are managed.
+On Linux, it installs some core tools with `apt`, installs Neovim and eza from upstream binaries, installs Powerlevel10k manually, and manages symlinks.
 
 ## Make an existing machine use this config
 

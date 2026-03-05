@@ -4,6 +4,8 @@ set -euo pipefail
 DOTFILES_BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=common.sh
 source "$DOTFILES_BIN_DIR/common.sh"
+# shellcheck source=linux.sh
+source "$DOTFILES_BIN_DIR/linux.sh"
 
 bootstrap_packages() {
   if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
@@ -20,22 +22,8 @@ bootstrap_packages() {
     eval "$(/opt/homebrew/bin/brew shellenv || /usr/local/bin/brew shellenv)"
     brew bundle --file="$DOTFILES_ROOT/Brewfile"
   else
-    echo "Skipping package bootstrap for linux (no package manager configured)."
+    echo "Skipping Homebrew package bootstrap for linux."
   fi
-}
-
-install_powerlevel10k_linux() {
-  if [[ "$DOTFILES_TARGET" != "linux" ]]; then
-    return
-  fi
-
-  local p10k_dir="${XDG_DATA_HOME:-$HOME/.local/share}/powerlevel10k"
-  if [[ -e "$p10k_dir" ]]; then
-    return
-  fi
-
-  mkdir -p "$(dirname "$p10k_dir")"
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$p10k_dir"
 }
 
 link() { mkdir -p "$(dirname "$2")"; ln -sfn "$1" "$2"; }
@@ -43,7 +31,7 @@ link() { mkdir -p "$(dirname "$2")"; ln -sfn "$1" "$2"; }
 resolve_target
 set_platform_paths
 bootstrap_packages
-install_powerlevel10k_linux
+bootstrap_linux_tools
 
 for f in .zshrc .zprofile .zshenv .p10k.zsh .gitconfig; do
   link "$DOTFILES_ROOT/home/$f" "$HOME/$f"

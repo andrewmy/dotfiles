@@ -24,6 +24,7 @@ unset p10k_theme p10k_theme_candidates
 
 typeset -U path PATH
 path=(
+    "$HOME/.local/bin"
     "$HOME/Miniforge3/bin"
     "$HOME/.antigravity/antigravity/bin"
     "$HOME/.yarn/bin"
@@ -113,10 +114,18 @@ git_just_pull() {
 alias phpqa='docker run --init -it --rm -v $(pwd):/project -v $(pwd)/tmp-phpqa:/tmp -w /project jakzal/phpqa:alpine'
 alias stern-prod='stern --namespace prod --kubeconfig ~/.kube/awsconfig-prod'
 alias serena='uvx --from git+https://github.com/oraios/serena serena'
-alias top=mactop
-alias cat=bat
+if (( $+commands[mactop] )); then
+    alias top=mactop
+fi
+if (( $+commands[bat] )); then
+    alias cat=bat
+elif (( $+commands[batcat] )); then
+    alias cat=batcat
+fi
 alias vim=nvim
-alias ls=eza
+if (( $+commands[eza] )); then
+    alias ls=eza
+fi
 alias du=ncdu
 alias ll="ls --color=auto -h -H --group-directories-first --time-style=long-iso -l"
 alias serena_sse="uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context codex --project $(pwd) --transport streamable-http --port 9121"
