@@ -5,7 +5,19 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+typeset -a p10k_theme_candidates
+p10k_theme_candidates=(
+    /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+    /usr/local/share/powerlevel10k/powerlevel10k.zsh-theme
+    "${XDG_DATA_HOME:-$HOME/.local/share}/powerlevel10k/powerlevel10k.zsh-theme"
+)
+for p10k_theme in "${p10k_theme_candidates[@]}"; do
+    if [[ -r "$p10k_theme" ]]; then
+        source "$p10k_theme"
+        break
+    fi
+done
+unset p10k_theme p10k_theme_candidates
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -122,9 +134,8 @@ setopt hist_ignore_dups share_history inc_append_history extended_history
 WORDCHARS=${WORDCHARS/\/}
 
 if (( $+commands[rv] )); then
-    eval "$(/opt/homebrew/bin/rv shell init zsh)"
-    eval "$(/opt/homebrew/bin/rv shell completions zsh)"
+    eval "$(rv shell init zsh)"
+    eval "$(rv shell completions zsh)"
 fi
 
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
-

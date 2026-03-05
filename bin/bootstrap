@@ -24,11 +24,26 @@ bootstrap_packages() {
   fi
 }
 
+install_powerlevel10k_linux() {
+  if [[ "$DOTFILES_TARGET" != "linux" ]]; then
+    return
+  fi
+
+  local p10k_dir="${XDG_DATA_HOME:-$HOME/.local/share}/powerlevel10k"
+  if [[ -e "$p10k_dir" ]]; then
+    return
+  fi
+
+  mkdir -p "$(dirname "$p10k_dir")"
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$p10k_dir"
+}
+
 link() { mkdir -p "$(dirname "$2")"; ln -sfn "$1" "$2"; }
 
 resolve_target
 set_platform_paths
 bootstrap_packages
+install_powerlevel10k_linux
 
 for f in .zshrc .zprofile .zshenv .p10k.zsh .gitconfig; do
   link "$DOTFILES_ROOT/home/$f" "$HOME/$f"
