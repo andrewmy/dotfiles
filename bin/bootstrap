@@ -26,7 +26,16 @@ bootstrap_packages() {
   fi
 }
 
-link() { mkdir -p "$(dirname "$2")"; ln -sfn "$1" "$2"; }
+link() {
+  local src="$1"
+  local target="$2"
+
+  mkdir -p "$(dirname "$target")"
+  if [[ -d "$target" && ! -L "$target" ]]; then
+    rm -rf "$target"
+  fi
+  ln -sfn "$src" "$target"
+}
 
 resolve_target
 set_platform_paths
@@ -36,6 +45,8 @@ bootstrap_linux_tools
 for f in .zshrc .zprofile .zshenv .p10k.zsh .gitconfig; do
   link "$DOTFILES_ROOT/home/$f" "$HOME/$f"
 done
+link "$DOTFILES_ROOT/home/.zsh/functions" "$HOME/.zsh/functions"
+link "$DOTFILES_ROOT/home/.zsh/keybindings.zsh" "$HOME/.zsh/keybindings.zsh"
 
 link "$DOTFILES_ROOT/config/nvim" "$HOME/.config/nvim"
 link "$DOTFILES_ROOT/config/mc" "$HOME/.config/mc"
