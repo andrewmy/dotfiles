@@ -1,10 +1,8 @@
 tap "deskflow/tap"
 tap "github/gh"
-tap "homebrew/bundle"
 tap "jez/formulae"
 tap "krishkrosh/apps"
 tap "mike-engel/jwt-cli"
-tap "robusta-dev/krr"
 tap "steipete/tap"
 tap "symfony-cli/tap"
 # Search tool like grep, but optimized for programmers
@@ -37,8 +35,6 @@ brew "htmlq"
 brew "jless"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
-# Kubernetes CLI To Manage Your Clusters In Style!
-brew "k9s"
 # Curses-based tool for viewing and analyzing log files
 brew "lnav"
 # Terminal-based visual file manager
@@ -71,14 +67,11 @@ brew "yazi"
 brew "jez/formulae/git-heatmap"
 # Super fast CLI tool to decode and encode JWTs built in Rust
 brew "mike-engel/jwt-cli/jwt-cli"
-# Kubernetes Resource Recommender by Robusta
-brew "robusta-dev/krr/krr"
+brew "rv"
 # Control web-based media players with media keys
 cask "beardedspice"
 # Universal chat app powered by Matrix
 cask "beeper"
-# Display management tool
-cask "betterdisplay"
 # Tool to customise input devices and automate computer systems
 cask "bettertouchtool"
 # Scriptable scratchpad for developers
@@ -97,8 +90,6 @@ cask "fork"
 cask "ghostty"
 # Free and open-source media player
 cask "iina"
-# Open-source screen recorder built with web technology
-cask "kap"
 # Tool to prevent the system from going into sleep mode
 cask "keepingyouawake"
 # Blocks all Keyboard and TouchBar input
