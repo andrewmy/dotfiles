@@ -66,7 +66,7 @@ if (( $+commands[eza] )); then
     alias ls=eza
 fi
 alias du=ncdu
-alias ll="ls --color=auto -h -H --group-directories-first --time-style=long-iso -l"
+alias ll="ls --color=auto -h -H --group-directories-first --time-style=long-iso -lA"
 alias serena_sse="uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context codex --project $(pwd) --transport streamable-http --port 9121"
 
 zstyle ':completion:*' menu select
