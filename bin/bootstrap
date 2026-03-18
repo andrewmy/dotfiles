@@ -48,6 +48,9 @@ done
 link "$DOTFILES_ROOT/home/.zsh/functions" "$HOME/.zsh/functions"
 link "$DOTFILES_ROOT/home/.zsh/keybindings.zsh" "$HOME/.zsh/keybindings.zsh"
 
+link "$DOTFILES_ROOT/home/.claude/settings.json" "$HOME/.claude/settings.json"
+link "$DOTFILES_ROOT/home/.claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
+
 link "$DOTFILES_ROOT/config/nvim" "$HOME/.config/nvim"
 link "$DOTFILES_ROOT/config/mc" "$HOME/.config/mc"
 link "$DOTFILES_ROOT/config/htop/htoprc" "$HOME/.config/htop/htoprc"
