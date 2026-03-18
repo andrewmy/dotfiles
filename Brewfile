@@ -3,7 +3,6 @@ tap "github/gh"
 tap "jez/formulae"
 tap "krishkrosh/apps"
 tap "mike-engel/jwt-cli"
-tap "steipete/tap"
 tap "symfony-cli/tap"
 # Search tool like grep, but optimized for programmers
 brew "ack"
