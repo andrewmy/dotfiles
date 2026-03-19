@@ -42,6 +42,9 @@ set_platform_paths
 bootstrap_packages
 bootstrap_linux_tools
 
+HOME_CONFIG_ROOT="$DOTFILES_ROOT/home/.config"
+APP_CONFIG_ROOT="$DOTFILES_ROOT/app-config"
+
 for f in .zshrc .zprofile .zshenv .p10k.zsh .gitconfig; do
   link "$DOTFILES_ROOT/home/$f" "$HOME/$f"
 done
@@ -51,20 +54,20 @@ link "$DOTFILES_ROOT/home/.zsh/keybindings.zsh" "$HOME/.zsh/keybindings.zsh"
 link "$DOTFILES_ROOT/home/.claude/settings.json" "$HOME/.claude/settings.json"
 link "$DOTFILES_ROOT/home/.claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
 
-link "$DOTFILES_ROOT/config/nvim" "$HOME/.config/nvim"
-link "$DOTFILES_ROOT/config/mc" "$HOME/.config/mc"
-link "$DOTFILES_ROOT/config/htop/htoprc" "$HOME/.config/htop/htoprc"
-link "$DOTFILES_ROOT/config/git/ignore" "$HOME/.config/git/ignore"
+link "$HOME_CONFIG_ROOT/nvim" "$HOME/.config/nvim"
+link "$HOME_CONFIG_ROOT/mc" "$HOME/.config/mc"
+link "$HOME_CONFIG_ROOT/htop/htoprc" "$HOME/.config/htop/htoprc"
+link "$HOME_CONFIG_ROOT/git/ignore" "$HOME/.config/git/ignore"
 
-link "$DOTFILES_ROOT/config/ghostty/config" "$DOTFILES_GHOSTTY_CONFIG_PATH"
-link "$DOTFILES_ROOT/config/vscode-insiders/User/settings.json" "$DOTFILES_VSCODE_USER_DIR/settings.json"
+link "$APP_CONFIG_ROOT/ghostty/config" "$DOTFILES_GHOSTTY_CONFIG_PATH"
+link "$APP_CONFIG_ROOT/vscode-insiders/User/settings.json" "$DOTFILES_VSCODE_USER_DIR/settings.json"
 
-if [[ -f "$DOTFILES_ROOT/config/vscode-insiders/User/keybindings.json" ]]; then
-  link "$DOTFILES_ROOT/config/vscode-insiders/User/keybindings.json" "$DOTFILES_VSCODE_USER_DIR/keybindings.json"
+if [[ -f "$APP_CONFIG_ROOT/vscode-insiders/User/keybindings.json" ]]; then
+  link "$APP_CONFIG_ROOT/vscode-insiders/User/keybindings.json" "$DOTFILES_VSCODE_USER_DIR/keybindings.json"
 fi
 
-if [[ -d "$DOTFILES_ROOT/config/vscode-insiders/User/snippets" ]]; then
-  link "$DOTFILES_ROOT/config/vscode-insiders/User/snippets" "$DOTFILES_VSCODE_USER_DIR/snippets"
+if [[ -d "$APP_CONFIG_ROOT/vscode-insiders/User/snippets" ]]; then
+  link "$APP_CONFIG_ROOT/vscode-insiders/User/snippets" "$DOTFILES_VSCODE_USER_DIR/snippets"
 fi
 
 ln -sfn "$HOME/.config/git/ignore" "$HOME/.gitignore"

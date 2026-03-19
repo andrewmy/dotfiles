@@ -41,6 +41,9 @@ link_with_backup() {
 resolve_target
 set_platform_paths
 
+HOME_CONFIG_ROOT="$DOTFILES_ROOT/home/.config"
+APP_CONFIG_ROOT="$DOTFILES_ROOT/app-config"
+
 for f in .zshrc .zprofile .zshenv .p10k.zsh .gitconfig; do
   link_with_backup "$DOTFILES_ROOT/home/$f" "$HOME/$f"
 done
@@ -48,19 +51,19 @@ done
 link_with_backup "$DOTFILES_ROOT/home/.zsh/functions" "$HOME/.zsh/functions"
 link_with_backup "$DOTFILES_ROOT/home/.zsh/keybindings.zsh" "$HOME/.zsh/keybindings.zsh"
 
-link_with_backup "$DOTFILES_ROOT/config/nvim" "$HOME/.config/nvim"
-link_with_backup "$DOTFILES_ROOT/config/mc" "$HOME/.config/mc"
-link_with_backup "$DOTFILES_ROOT/config/htop/htoprc" "$HOME/.config/htop/htoprc"
-link_with_backup "$DOTFILES_ROOT/config/git/ignore" "$HOME/.config/git/ignore"
+link_with_backup "$HOME_CONFIG_ROOT/nvim" "$HOME/.config/nvim"
+link_with_backup "$HOME_CONFIG_ROOT/mc" "$HOME/.config/mc"
+link_with_backup "$HOME_CONFIG_ROOT/htop/htoprc" "$HOME/.config/htop/htoprc"
+link_with_backup "$HOME_CONFIG_ROOT/git/ignore" "$HOME/.config/git/ignore"
 link_with_backup "$HOME/.config/git/ignore" "$HOME/.gitignore"
 
-link_with_backup "$DOTFILES_ROOT/config/ghostty/config" "$DOTFILES_GHOSTTY_CONFIG_PATH"
-link_with_backup "$DOTFILES_ROOT/config/vscode-insiders/User/settings.json" "$DOTFILES_VSCODE_USER_DIR/settings.json"
+link_with_backup "$APP_CONFIG_ROOT/ghostty/config" "$DOTFILES_GHOSTTY_CONFIG_PATH"
+link_with_backup "$APP_CONFIG_ROOT/vscode-insiders/User/settings.json" "$DOTFILES_VSCODE_USER_DIR/settings.json"
 
-if [ -f "$DOTFILES_ROOT/config/vscode-insiders/User/keybindings.json" ]; then
-  link_with_backup "$DOTFILES_ROOT/config/vscode-insiders/User/keybindings.json" "$DOTFILES_VSCODE_USER_DIR/keybindings.json"
+if [ -f "$APP_CONFIG_ROOT/vscode-insiders/User/keybindings.json" ]; then
+  link_with_backup "$APP_CONFIG_ROOT/vscode-insiders/User/keybindings.json" "$DOTFILES_VSCODE_USER_DIR/keybindings.json"
 fi
 
-if [ -d "$DOTFILES_ROOT/config/vscode-insiders/User/snippets" ]; then
-  link_with_backup "$DOTFILES_ROOT/config/vscode-insiders/User/snippets" "$DOTFILES_VSCODE_USER_DIR/snippets"
+if [ -d "$APP_CONFIG_ROOT/vscode-insiders/User/snippets" ]; then
+  link_with_backup "$APP_CONFIG_ROOT/vscode-insiders/User/snippets" "$DOTFILES_VSCODE_USER_DIR/snippets"
 fi
