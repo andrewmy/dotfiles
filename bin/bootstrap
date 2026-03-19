@@ -56,8 +56,10 @@ link "$DOTFILES_ROOT/home/.claude/statusline-command.sh" "$HOME/.claude/statusli
 
 link "$HOME_CONFIG_ROOT/nvim" "$HOME/.config/nvim"
 link "$HOME_CONFIG_ROOT/mc" "$HOME/.config/mc"
+link "$HOME_CONFIG_ROOT/gh/config.yml" "$HOME/.config/gh/config.yml"
 link "$HOME_CONFIG_ROOT/htop/htoprc" "$HOME/.config/htop/htoprc"
 link "$HOME_CONFIG_ROOT/git/ignore" "$HOME/.config/git/ignore"
+link "$HOME_CONFIG_ROOT/zed/settings.json" "$HOME/.config/zed/settings.json"
 
 link "$APP_CONFIG_ROOT/ghostty/config" "$DOTFILES_GHOSTTY_CONFIG_PATH"
 link "$APP_CONFIG_ROOT/vscode-insiders/User/settings.json" "$DOTFILES_VSCODE_USER_DIR/settings.json"
