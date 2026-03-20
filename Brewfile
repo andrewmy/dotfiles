@@ -95,8 +95,6 @@ cask "keepingyouawake"
 cask "keyboardcleantool"
 # Mouse utility to add gesture functions and smooth scrolling to 3rd party mice
 cask "mac-mouse-fix"
-# Markdown editor with live preview and syntax highlighting
-cask "macdown-3000"
 # Extensible two-pane file manager
 cask "marta"
 # Tool to control external monitor brightness & volume
