@@ -72,6 +72,8 @@ if [[ -d "$APP_CONFIG_ROOT/vscode-insiders/User/snippets" ]]; then
   link "$APP_CONFIG_ROOT/vscode-insiders/User/snippets" "$DOTFILES_VSCODE_USER_DIR/snippets"
 fi
 
+"$DOTFILES_BIN_DIR/vscode-insiders-extensions" install
+
 ln -sfn "$HOME/.config/git/ignore" "$HOME/.gitignore"
 
 if [[ ! -f "$HOME/.zsh_secrets" ]]; then

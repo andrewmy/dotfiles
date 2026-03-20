@@ -67,3 +67,8 @@ fi
 if [ -d "$APP_CONFIG_ROOT/vscode-insiders/User/snippets" ]; then
   link_with_backup "$APP_CONFIG_ROOT/vscode-insiders/User/snippets" "$DOTFILES_VSCODE_USER_DIR/snippets"
 fi
+
+if command -v code-insiders >/dev/null 2>&1; then
+  echo "If this machine should define the shared VS Code Insiders extension set, run:"
+  echo "  ./bin/vscode-insiders-extensions update"
+fi

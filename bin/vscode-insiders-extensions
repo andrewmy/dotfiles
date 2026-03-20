@@ -1,0 +1,173 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES_BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=common.sh
+source "$DOTFILES_BIN_DIR/common.sh"
+
+resolve_target
+set_platform_paths
+
+MANIFEST_PATH="$DOTFILES_ROOT/app-config/vscode-insiders/extensions.txt"
+
+usage() {
+  cat <<'EOF'
+Usage: ./bin/vscode-insiders-extensions <update|install|sync>
+
+  update   Overwrite the tracked manifest from the currently installed extensions
+  install  Install extensions missing from the tracked manifest
+  sync     Reconcile the local install with the tracked manifest
+EOF
+}
+
+code_insiders_bin() {
+  if command -v code-insiders >/dev/null 2>&1; then
+    command -v code-insiders
+    return 0
+  fi
+
+  return 1
+}
+
+with_temp_user_data_dir() {
+  local tmp_dir
+  tmp_dir="$(mktemp -d "${TMPDIR:-/tmp}/dotfiles-vscode-insiders.XXXXXX")"
+  "$1" "$tmp_dir" "${@:2}"
+  rm -rf "$tmp_dir"
+}
+
+write_installed_extensions() {
+  local user_data_dir="$1"
+  local code_bin="$2"
+  local output_path="$3"
+
+  "$code_bin" \
+    --user-data-dir "$user_data_dir" \
+    --extensions-dir "$DOTFILES_VSCODE_EXTENSIONS_DIR" \
+    --list-extensions 2>/dev/null | LC_ALL=C sort -u > "$output_path"
+}
+
+write_manifest_extensions() {
+  local output_path="$1"
+
+  if [[ ! -f "$MANIFEST_PATH" ]]; then
+    : > "$output_path"
+    return 0
+  fi
+
+  sed -e 's/[[:space:]]*$//' -e '/^[[:space:]]*#/d' -e '/^[[:space:]]*$/d' "$MANIFEST_PATH" | LC_ALL=C sort -u > "$output_path"
+}
+
+update_manifest() {
+  local code_bin
+  if ! code_bin="$(code_insiders_bin)"; then
+    echo "code-insiders is not in PATH. Install the VS Code Insiders shell command first."
+    exit 1
+  fi
+
+  mkdir -p "$(dirname "$MANIFEST_PATH")"
+  with_temp_user_data_dir write_installed_extensions "$code_bin" "$MANIFEST_PATH"
+  echo "Updated $MANIFEST_PATH"
+}
+
+install_from_manifest() {
+  local strict="${1:-false}"
+  local code_bin
+  if ! code_bin="$(code_insiders_bin)"; then
+    if [[ "$strict" == "true" ]]; then
+      echo "code-insiders is not in PATH. Install the VS Code Insiders shell command first."
+      exit 1
+    fi
+
+    echo "Skipping VS Code Insiders extensions: code-insiders is not in PATH."
+    return 0
+  fi
+
+  if [[ ! -f "$MANIFEST_PATH" ]]; then
+    if [[ "$strict" == "true" ]]; then
+      echo "Missing manifest: $MANIFEST_PATH"
+      exit 1
+    fi
+
+    echo "Skipping VS Code Insiders extensions: no manifest at $MANIFEST_PATH."
+    return 0
+  fi
+
+  local temp_dir
+  local user_data_dir
+  local manifest_file
+  local installed_file
+  temp_dir="$(mktemp -d "${TMPDIR:-/tmp}/dotfiles-vscode-insiders.XXXXXX")"
+  user_data_dir="$temp_dir/user-data"
+  manifest_file="$temp_dir/manifest.txt"
+  installed_file="$temp_dir/installed.txt"
+
+  write_manifest_extensions "$manifest_file"
+  write_installed_extensions "$user_data_dir" "$code_bin" "$installed_file"
+
+  while IFS= read -r extension; do
+    [[ -n "$extension" ]] || continue
+    echo "Installing $extension"
+    "$code_bin" \
+      --user-data-dir "$user_data_dir" \
+      --extensions-dir "$DOTFILES_VSCODE_EXTENSIONS_DIR" \
+      --install-extension "$extension" \
+      --force >/dev/null
+  done < <(comm -23 "$manifest_file" "$installed_file")
+
+  rm -rf "$temp_dir"
+}
+
+sync_to_manifest() {
+  local code_bin
+  if ! code_bin="$(code_insiders_bin)"; then
+    echo "code-insiders is not in PATH. Install the VS Code Insiders shell command first."
+    exit 1
+  fi
+
+  if [[ ! -f "$MANIFEST_PATH" ]]; then
+    echo "Missing manifest: $MANIFEST_PATH"
+    exit 1
+  fi
+
+  install_from_manifest true
+
+  local temp_dir
+  local user_data_dir
+  local manifest_file
+  local installed_file
+  temp_dir="$(mktemp -d "${TMPDIR:-/tmp}/dotfiles-vscode-insiders.XXXXXX")"
+  user_data_dir="$temp_dir/user-data"
+  manifest_file="$temp_dir/manifest.txt"
+  installed_file="$temp_dir/installed.txt"
+
+  write_manifest_extensions "$manifest_file"
+  write_installed_extensions "$user_data_dir" "$code_bin" "$installed_file"
+
+  while IFS= read -r extension; do
+    [[ -n "$extension" ]] || continue
+    echo "Uninstalling $extension"
+    "$code_bin" \
+      --user-data-dir "$user_data_dir" \
+      --extensions-dir "$DOTFILES_VSCODE_EXTENSIONS_DIR" \
+      --uninstall-extension "$extension" >/dev/null
+  done < <(comm -13 "$manifest_file" "$installed_file")
+
+  rm -rf "$temp_dir"
+}
+
+case "${1:-}" in
+  update)
+    update_manifest
+    ;;
+  install)
+    install_from_manifest false
+    ;;
+  sync)
+    sync_to_manifest
+    ;;
+  *)
+    usage
+    exit 1
+    ;;
+esac

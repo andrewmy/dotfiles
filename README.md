@@ -67,3 +67,18 @@ These files are expected to be created manually on each machine:
 2. Validate changes locally
 3. Commit and push
 4. On other machines: `git pull` and re-run `./bin/bootstrap`
+
+## VS Code Extensions
+
+```Shell
+./bin/vscode-insiders-extensions update
+./bin/vscode-insiders-extensions install
+./bin/vscode-insiders-extensions sync
+```
+
+`update` overwrites the manifest from the current machine.
+`install` is add-only and installs anything missing from the manifest.
+`sync` is strict and uninstalls anything not listed in the manifest.
+
+`./bin/bootstrap` runs the add-only `install` step automatically.
+`update` stays manual so one machine does not silently rewrite the shared manifest.

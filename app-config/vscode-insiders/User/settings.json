@@ -9,5 +9,9 @@
     "plaintext": false,
     "markdown": false,
     "scminput": false
-  }
+  },
+  "chat.tools.terminal.outputLocation": "chat",
+  "milkdown.theme": "classic",
+  "editor.wordWrap": "on",
+  "editor.minimap.enabled": false
 }

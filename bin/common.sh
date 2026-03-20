@@ -25,9 +25,11 @@ resolve_target() {
 set_platform_paths() {
   if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
     DOTFILES_VSCODE_USER_DIR="$HOME/Library/Application Support/Code - Insiders/User"
+    DOTFILES_VSCODE_EXTENSIONS_DIR="$HOME/.vscode-insiders/extensions"
     DOTFILES_GHOSTTY_CONFIG_PATH="$HOME/Library/Application Support/com.mitchellh.ghostty/config"
   else
     DOTFILES_VSCODE_USER_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/Code - Insiders/User"
+    DOTFILES_VSCODE_EXTENSIONS_DIR="$HOME/.vscode-insiders/extensions"
     DOTFILES_GHOSTTY_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/config"
   fi
 }
