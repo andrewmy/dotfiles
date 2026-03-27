@@ -14,7 +14,19 @@
       "Bash(head:*)",
       "Bash(tail:*)",
       "Bash(wc:*)",
-      "Bash(diff:*)"
+      "Bash(diff:*)",
+      "WebSearch",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs",
+      "Bash(gh run view:*)",
+      "Bash(gh workflow list:*)",
+      "Bash(gh run list:*)",
+      "Bash(git diff:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr view:*)",
+      "mcp__claude_ai_Notion__notion-fetch",
+      "Bash(bundle show:*)",
+      "mcp__plugin_serena_serena__get_symbols_overview"
     ],
     "deny": [
       "Bash(rm:*)",
@@ -24,7 +36,11 @@
       "Read(./config/secrets/.*)",
       "Read(./secrets/**)"
     ],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "plan"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
     "atlassian@claude-plugins-official": true,
@@ -51,8 +67,5 @@
     "phpactor@claude-code-lsps": true
   },
   "alwaysThinkingEnabled": true,
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  }
+  "effortLevel": "high"
 }
