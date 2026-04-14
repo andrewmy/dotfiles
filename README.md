@@ -28,6 +28,7 @@ You can override with `DOTFILES_TARGET=darwin` or `DOTFILES_TARGET=linux`.
 
 On macOS, it bootstraps Xcode Command Line Tools + Homebrew and runs `brew bundle`.
 On Linux, it installs some core tools with `apt`, installs Neovim and eza from upstream binaries, installs Powerlevel10k manually, and manages symlinks.
+If you want Treesitter-based Neovim plugins such as `nvim-ts-autotag` to work on Debian/Ubuntu, install `build-essential` manually. The bootstrap scripts do not install a C compiler.
 
 ## Make an existing machine use this config
 
