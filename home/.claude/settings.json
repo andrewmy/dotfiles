@@ -26,7 +26,27 @@
       "Bash(gh pr view:*)",
       "mcp__claude_ai_Notion__notion-fetch",
       "Bash(bundle show:*)",
-      "mcp__plugin_serena_serena__get_symbols_overview"
+      "mcp__plugin_serena_serena__get_symbols_overview",
+      "Bash(gh pr checkout:*)",
+      "Bash(gh pr edit:*)",
+      "Bash(gh pr checks:*)",
+      "mcp__claude_ai_Atlassian__getJiraIssue",
+      "Bash(bin/rspec:*)",
+      "Bash(rubocop:*)",
+      "mcp__claude_ai_Atlassian__searchJiraIssuesUsingJql",
+      "mcp__claude_ai_Slack__slack_search_public_and_private",
+      "mcp__wick__wick_fetch",
+      "mcp__wick__wick_search",
+      "Bash(xargs -I {} basename {})",
+      "mcp__claude_ai_Notion__notion-search",
+      "mcp__claude_ai_Slack__slack_search_public",
+      "mcp__claude_ai_Slack__slack_search_channels",
+      "mcp__claude_ai_Slack__slack_read_thread",
+      "Bash(bin/rails generate:*)",
+      "Bash(bin/rails db:migrate:*)",
+      "mcp__plugin_serena_serena__write_memory",
+      "mcp__plugin_serena_serena__activate_project",
+      "Bash(bundle exec rubocop:*)"
     ],
     "deny": [
       "Bash(rm:*)",
@@ -64,8 +84,24 @@
     "sentry@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
     "php-lsp@claude-plugins-official": true,
-    "phpactor@claude-code-lsps": true
+    "phpactor@claude-code-lsps": true,
+    "ruby-lsp@claude-plugins-official": true,
+    "ruby-lsp@claude-code-lsps": true,
+    "vue-volar@claude-code-lsps": true,
+    "caveman@caveman": true
+  },
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    }
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  }
 }
