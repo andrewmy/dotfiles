@@ -67,8 +67,6 @@ brew "jez/formulae/git-heatmap"
 # Super fast CLI tool to decode and encode JWTs built in Rust
 brew "mike-engel/jwt-cli/jwt-cli"
 brew "rv"
-# Control web-based media players with media keys
-cask "beardedspice"
 # Universal chat app powered by Matrix
 cask "beeper"
 # Tool to customise input devices and automate computer systems
@@ -95,8 +93,6 @@ cask "keepingyouawake"
 cask "keyboardcleantool"
 # Mouse utility to add gesture functions and smooth scrolling to 3rd party mice
 cask "mac-mouse-fix"
-# Extensible two-pane file manager
-cask "marta"
 # Tool to control external monitor brightness & volume
 cask "monitorcontrol"
 # Calculator and converter application
