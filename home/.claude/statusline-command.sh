@@ -10,35 +10,9 @@ cost_usd=$(echo "$input" | jq -r '.cost.total_cost_usd // empty')
 vim_mode=$(echo "$input" | jq -r '.vim.mode // empty')
 session_name=$(echo "$input" | jq -r '.session_name // empty')
 
-# Fetch 5h and weekly quota from Anthropic OAuth API (cached for 60s)
-cache_file="/tmp/claude-usage-cache.json"
-cache_max_age=60
-usage_5h=""
-usage_wk=""
-
-if [ -f "$cache_file" ]; then
-  cache_age=$(( $(date +%s) - $(stat -f %m "$cache_file") ))
-else
-  cache_age=$((cache_max_age + 1))
-fi
-
-if [ "$cache_age" -gt "$cache_max_age" ]; then
-  token=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null | jq -r '.claudeAiOauth.accessToken // empty' 2>/dev/null)
-  if [ -n "$token" ]; then
-    usage_json=$(curl -s --max-time 3 'https://api.anthropic.com/api/oauth/usage' \
-      -H "Authorization: Bearer $token" \
-      -H "anthropic-beta: oauth-2025-04-20" \
-      -H "User-Agent: claude-code/2.1.78" 2>/dev/null)
-    if echo "$usage_json" | jq -e '.five_hour' >/dev/null 2>&1; then
-      echo "$usage_json" > "$cache_file"
-    fi
-  fi
-fi
-
-if [ -f "$cache_file" ]; then
-  usage_5h=$(jq -r '.five_hour.utilization // empty' "$cache_file" 2>/dev/null)
-  usage_wk=$(jq -r '.seven_day.utilization // empty' "$cache_file" 2>/dev/null)
-fi
+# Rate-limit usage from statusline input (Claude.ai subscribers only; absent on enterprise/usage-billed accounts)
+usage_5h=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
+usage_wk=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
 
 # Shorten home directory to ~
 home="$HOME"
