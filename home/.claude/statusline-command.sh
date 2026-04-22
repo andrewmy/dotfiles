@@ -14,6 +14,28 @@ session_name=$(echo "$input" | jq -r '.session_name // empty')
 usage_5h=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
 usage_wk=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
 
+# Current git branch for $cwd. Empty on detached HEAD or non-git dirs.
+branch=$(git -C "$cwd" symbolic-ref --short -q HEAD 2>/dev/null)
+
+# Monthly CC spend — read from cache refreshed in background by monthly-cost-refresh.sh.
+cost_cache="/tmp/claude-monthly-cost.json"
+cost_max_age=900
+monthly_cost=""
+if command -v ccusage >/dev/null 2>&1; then
+  cur_month=$(date +%Y-%m)
+  if [ -f "$cost_cache" ]; then
+    cache_month=$(jq -r '.month // ""' "$cost_cache" 2>/dev/null)
+    cache_updated=$(jq -r '.updated_at // 0' "$cost_cache" 2>/dev/null)
+    age=$(( $(date +%s) - cache_updated ))
+    [ "$cache_month" = "$cur_month" ] && monthly_cost=$(jq -r '.cost_usd // empty' "$cost_cache" 2>/dev/null)
+    if [ "$cache_month" != "$cur_month" ] || [ "$age" -gt "$cost_max_age" ]; then
+      ( bash "$HOME/.claude/monthly-cost-refresh.sh" >/dev/null 2>&1 & ) >/dev/null 2>&1
+    fi
+  else
+    ( bash "$HOME/.claude/monthly-cost-refresh.sh" >/dev/null 2>&1 & ) >/dev/null 2>&1
+  fi
+fi
+
 # Shorten home directory to ~
 home="$HOME"
 short_cwd="${cwd/#$home/\~}"
@@ -69,6 +91,11 @@ caveman=$(caveman_badge)
 # Model name
 parts+=("$(printf '\033[36m%s\033[0m' "$model")")
 
+# Git branch (omitted on detached HEAD or non-git dirs)
+if [ -n "$branch" ]; then
+  parts+=("$(printf '\033[35m⎇ %s\033[0m' "$branch")")
+fi
+
 # Context window usage
 if [ -n "$used_pct" ]; then
   color=$(usage_color "$used_pct")
@@ -85,6 +112,12 @@ fi
 if [ -n "$usage_wk" ]; then
   color=$(usage_color "$usage_wk")
   parts+=("$(printf "${color}wk:%s%%\033[0m" "${usage_wk%.*}")")
+fi
+
+# Monthly spend (local ccusage cache)
+if [ -n "$monthly_cost" ]; then
+  mo_formatted=$(printf '%.0f' "$monthly_cost")
+  parts+=("$(printf '\033[36mmo:$%s\033[0m' "$mo_formatted")")
 fi
 
 # Session cost
