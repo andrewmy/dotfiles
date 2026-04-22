@@ -18,6 +18,27 @@ usage_wk=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empt
 home="$HOME"
 short_cwd="${cwd/#$home/\~}"
 
+# Caveman mode badge (reads flag file written by caveman SessionStart hook).
+# Hardening mirrors upstream hooks/caveman-statusline.sh: a statusline renders
+# its output on every keystroke, so the flag file is treated as untrusted input.
+caveman_badge() {
+  local flag="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/.caveman-active"
+  [ -L "$flag" ] && return
+  [ ! -f "$flag" ] && return
+  local mode
+  mode=$(head -c 64 "$flag" 2>/dev/null | tr -d '\n\r' | tr '[:upper:]' '[:lower:]')
+  mode=$(printf '%s' "$mode" | tr -cd 'a-z0-9-')
+  case "$mode" in
+    lite|full|ultra|wenyan-lite|wenyan|wenyan-full|wenyan-ultra|commit|review|compress) ;;
+    *) return ;;
+  esac
+  if [ "$mode" = "full" ]; then
+    printf '\033[38;5;172m[CAVEMAN]\033[0m'
+  else
+    printf '\033[38;5;172m[CAVEMAN:%s]\033[0m' "$(printf '%s' "$mode" | tr '[:lower:]' '[:upper:]')"
+  fi
+}
+
 # Color picker for usage percentages
 usage_color() {
   local val_int=${1%.*}
@@ -40,6 +61,10 @@ parts+=("$(printf '\033[34m%s\033[0m' "$short_cwd")")
 if [ -n "$session_name" ]; then
   parts+=("$(printf '\033[35m[%s]\033[0m' "$session_name")")
 fi
+
+# Caveman mode badge (if active)
+caveman=$(caveman_badge)
+[ -n "$caveman" ] && parts+=("$caveman")
 
 # Model name
 parts+=("$(printf '\033[36m%s\033[0m' "$model")")
