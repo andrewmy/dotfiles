@@ -1,0 +1,6 @@
+ccusage
+cline
+gitnexus
+opencode-ai
+typescript
+wrangler

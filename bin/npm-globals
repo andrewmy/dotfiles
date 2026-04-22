@@ -1,0 +1,159 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES_BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=common.sh
+source "$DOTFILES_BIN_DIR/common.sh"
+
+MANIFEST_PATH="$DOTFILES_ROOT/npm-globals.txt"
+
+usage() {
+  cat <<'EOF'
+Usage: ./bin/npm-globals <update|install|sync>
+
+  update   Overwrite the tracked manifest from the currently installed globals
+  install  Install globals missing from the tracked manifest
+  sync     Reconcile the local install with the tracked manifest
+EOF
+}
+
+npm_bin() {
+  if command -v npm >/dev/null 2>&1; then
+    command -v npm
+    return 0
+  fi
+
+  return 1
+}
+
+write_installed_globals() {
+  local output_path="$1"
+
+  npm list -g --depth=0 --parseable 2>/dev/null \
+    | tail -n +2 \
+    | xargs -I {} basename {} \
+    | grep -v '^npm$' \
+    | LC_ALL=C sort -u > "$output_path"
+}
+
+write_manifest_globals() {
+  local output_path="$1"
+
+  if [[ ! -f "$MANIFEST_PATH" ]]; then
+    : > "$output_path"
+    return 0
+  fi
+
+  sed -e 's/[[:space:]]*$//' -e '/^[[:space:]]*#/d' -e '/^[[:space:]]*$/d' "$MANIFEST_PATH" | LC_ALL=C sort -u > "$output_path"
+}
+
+update_manifest() {
+  if ! npm_bin >/dev/null; then
+    echo "npm is not in PATH."
+    exit 1
+  fi
+
+  local temp_file
+  temp_file="$(mktemp "${TMPDIR:-/tmp}/dotfiles-npm-globals.XXXXXX")"
+
+  write_installed_globals "$temp_file"
+  mv "$temp_file" "$MANIFEST_PATH"
+  echo "Updated $MANIFEST_PATH"
+}
+
+install_from_manifest() {
+  local strict="${1:-false}"
+
+  if ! npm_bin >/dev/null; then
+    if [[ "$strict" == "true" ]]; then
+      echo "npm is not in PATH."
+      exit 1
+    fi
+
+    echo "Skipping npm globals: npm is not in PATH."
+    return 0
+  fi
+
+  if [[ ! -f "$MANIFEST_PATH" ]]; then
+    if [[ "$strict" == "true" ]]; then
+      echo "Missing manifest: $MANIFEST_PATH"
+      exit 1
+    fi
+
+    echo "Skipping npm globals: no manifest at $MANIFEST_PATH."
+    return 0
+  fi
+
+  local temp_dir
+  local manifest_file
+  local installed_file
+  temp_dir="$(mktemp -d "${TMPDIR:-/tmp}/dotfiles-npm-globals.XXXXXX")"
+  manifest_file="$temp_dir/manifest.txt"
+  installed_file="$temp_dir/installed.txt"
+
+  write_manifest_globals "$manifest_file"
+  write_installed_globals "$installed_file"
+
+  local missing
+  missing="$(comm -23 "$manifest_file" "$installed_file")"
+
+  if [[ -z "$missing" ]]; then
+    echo "All npm globals already installed."
+  else
+    while IFS= read -r package; do
+      [[ -n "$package" ]] || continue
+      echo "Installing $package"
+      npm install -g "$package"
+    done <<< "$missing"
+  fi
+
+  rm -rf "$temp_dir"
+}
+
+sync_to_manifest() {
+  if ! npm_bin >/dev/null; then
+    echo "npm is not in PATH."
+    exit 1
+  fi
+
+  if [[ ! -f "$MANIFEST_PATH" ]]; then
+    echo "Missing manifest: $MANIFEST_PATH"
+    exit 1
+  fi
+
+  install_from_manifest true
+
+  local temp_dir
+  local manifest_file
+  local installed_file
+  temp_dir="$(mktemp -d "${TMPDIR:-/tmp}/dotfiles-npm-globals.XXXXXX")"
+  manifest_file="$temp_dir/manifest.txt"
+  installed_file="$temp_dir/installed.txt"
+
+  write_manifest_globals "$manifest_file"
+  write_installed_globals "$installed_file"
+
+  while IFS= read -r package; do
+    [[ -n "$package" ]] || continue
+    echo "Uninstalling $package"
+    npm uninstall -g "$package"
+  done < <(comm -13 "$manifest_file" "$installed_file")
+
+  rm -rf "$temp_dir"
+}
+
+case "${1:-}" in
+  update)
+    update_manifest
+    ;;
+  install)
+    install_from_manifest false
+    ;;
+  sync)
+    sync_to_manifest
+    ;;
+  *)
+    usage
+    exit 1
+    ;;
+esac

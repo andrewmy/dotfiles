@@ -73,6 +73,7 @@ if [[ -d "$APP_CONFIG_ROOT/vscode-insiders/User/snippets" ]]; then
 fi
 
 "$DOTFILES_BIN_DIR/vscode-insiders-extensions" install
+"$DOTFILES_BIN_DIR/npm-globals" install
 
 ln -sfn "$HOME/.config/git/ignore" "$HOME/.gitignore"
 

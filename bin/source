@@ -72,3 +72,8 @@ if command -v code-insiders >/dev/null 2>&1; then
   echo "If this machine should define the shared VS Code Insiders extension set, run:"
   echo "  ./bin/vscode-insiders-extensions update"
 fi
+
+if command -v npm >/dev/null 2>&1; then
+  echo "If this machine should define the shared npm globals, run:"
+  echo "  ./bin/npm-globals update"
+fi
