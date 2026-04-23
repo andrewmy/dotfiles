@@ -1,0 +1,39 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "lmstudio": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LM Studio",
+      "options": {
+        "baseURL": "http://192.168.50.224:1234/v1"
+      },
+      "models": {
+        "qwen/qwen3.6-35b-a3b": {
+          "name": "Qwen 3.6 35B"
+        }
+      }
+    }
+  },
+  "mcp": {
+    "gitnexus": {
+      "type": "local",
+      "command": ["/opt/homebrew/bin/gitnexus", "mcp"]
+    },
+    "context7": {
+      "type": "local",
+      "command": ["npx", "-y", "@upstash/context7-mcp"]
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "@playwright/mcp@latest"]
+    },
+    "serena": {
+      "type": "local",
+      "command": ["uvx", "--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server"]
+    },
+    "wick": {
+      "type": "local",
+      "command": ["/opt/homebrew/bin/wick", "serve", "--mcp"]
+    }
+  }
+}

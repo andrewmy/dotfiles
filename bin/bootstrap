@@ -83,6 +83,7 @@ link "$HOME_CONFIG_ROOT/gh/config.yml" "$HOME/.config/gh/config.yml"
 link "$HOME_CONFIG_ROOT/htop/htoprc" "$HOME/.config/htop/htoprc"
 link "$HOME_CONFIG_ROOT/git/ignore" "$HOME/.config/git/ignore"
 link "$HOME_CONFIG_ROOT/zed/settings.json" "$HOME/.config/zed/settings.json"
+link "$HOME_CONFIG_ROOT/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
 
 bootstrap_neovim
 
