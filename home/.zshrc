@@ -67,7 +67,7 @@ if (( $+commands[eza] )); then
 fi
 alias du=ncdu
 alias ll="ls --color=auto -h -H --group-directories-first --time-style=long-iso -lA"
-alias serena_sse="uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context codex --project $(pwd) --transport streamable-http --port 9121"
+alias serena_list="lsof -iTCP -sTCP:LISTEN | grep 2428"
 
 zstyle ':completion:*' menu select
 zstyle ':completion:*' use-cache on
