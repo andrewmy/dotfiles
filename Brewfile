@@ -43,6 +43,8 @@ brew "midnight-commander"
 brew "ncdu"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Tree-sitter command-line tool used by nvim-treesitter parser updates
+brew "tree-sitter-cli"
 # Theme for zsh
 brew "powerlevel10k"
 # Modern replacement for ps written in Rust

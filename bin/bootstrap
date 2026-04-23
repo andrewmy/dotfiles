@@ -4,8 +4,6 @@ set -euo pipefail
 DOTFILES_BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=common.sh
 source "$DOTFILES_BIN_DIR/common.sh"
-# shellcheck source=linux.sh
-source "$DOTFILES_BIN_DIR/linux.sh"
 
 bootstrap_packages() {
   if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
@@ -26,6 +24,22 @@ bootstrap_packages() {
   fi
 }
 
+bootstrap_neovim() {
+  export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+
+  if ! command -v nvim >/dev/null 2>&1; then
+    echo "Skipping Neovim bootstrap: nvim not available."
+    return
+  fi
+
+  local data_home="${XDG_DATA_HOME:-$HOME/.local/share}"
+  rm -rf \
+    "$data_home/nvim/site/parser" \
+    "$data_home/nvim/lazy/nvim-treesitter/parser"
+
+  nvim --headless -i NONE "+Lazy! restore" "+TSUpdate" +qa
+}
+
 link() {
   local src="$1"
   local target="$2"
@@ -38,9 +52,18 @@ link() {
 }
 
 resolve_target
+
+if [[ "$DOTFILES_TARGET" == "linux" ]]; then
+  # shellcheck source=linux.sh
+  source "$DOTFILES_BIN_DIR/linux.sh"
+fi
+
 set_platform_paths
 bootstrap_packages
-bootstrap_linux_tools
+
+if [[ "$DOTFILES_TARGET" == "linux" ]]; then
+  bootstrap_linux_tools
+fi
 
 HOME_CONFIG_ROOT="$DOTFILES_ROOT/home/.config"
 APP_CONFIG_ROOT="$DOTFILES_ROOT/app-config"
@@ -60,6 +83,8 @@ link "$HOME_CONFIG_ROOT/gh/config.yml" "$HOME/.config/gh/config.yml"
 link "$HOME_CONFIG_ROOT/htop/htoprc" "$HOME/.config/htop/htoprc"
 link "$HOME_CONFIG_ROOT/git/ignore" "$HOME/.config/git/ignore"
 link "$HOME_CONFIG_ROOT/zed/settings.json" "$HOME/.config/zed/settings.json"
+
+bootstrap_neovim
 
 link "$APP_CONFIG_ROOT/ghostty/config" "$DOTFILES_GHOSTTY_CONFIG_PATH"
 link "$APP_CONFIG_ROOT/vscode-insiders/User/settings.json" "$DOTFILES_VSCODE_USER_DIR/settings.json"

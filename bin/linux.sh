@@ -15,11 +15,7 @@ version_ge() {
 }
 
 install_linux_apt_packages() {
-  if [[ "$DOTFILES_TARGET" != "linux" ]]; then
-    return
-  fi
-
-  local packages=(fzf bat zoxide ripgrep)
+  local packages=(build-essential cargo fzf bat zoxide ripgrep)
   local missing=()
   local pkg
   for pkg in "${packages[@]}"; do
@@ -43,6 +39,29 @@ install_linux_apt_packages() {
   done
 }
 
+install_tree_sitter_cli_linux() {
+  if command -v tree-sitter >/dev/null 2>&1; then
+    return
+  fi
+
+  if ! command -v cargo >/dev/null 2>&1; then
+    echo "Skipping tree-sitter-cli install: cargo not available."
+    return
+  fi
+
+  export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
+
+  if ! cargo install --locked tree-sitter-cli; then
+    echo "Skipping tree-sitter-cli install: cargo install failed."
+    return
+  fi
+
+  if [[ -x "$HOME/.cargo/bin/tree-sitter" ]]; then
+    mkdir -p "$HOME/.local/bin"
+    ln -sfn "$HOME/.cargo/bin/tree-sitter" "$HOME/.local/bin/tree-sitter"
+  fi
+}
+
 linux_arch() {
   case "$(uname -m)" in
     x86_64) echo "x86_64" ;;
@@ -61,10 +80,6 @@ eza_asset_target() {
 }
 
 install_neovim_linux() {
-  if [[ "$DOTFILES_TARGET" != "linux" ]]; then
-    return
-  fi
-
   local required_version="0.11.2"
   if command -v nvim >/dev/null 2>&1; then
     local current_version
@@ -121,7 +136,7 @@ install_neovim_linux() {
 }
 
 install_eza_linux() {
-  if [[ "$DOTFILES_TARGET" != "linux" ]] || command -v eza >/dev/null 2>&1; then
+  if command -v eza >/dev/null 2>&1; then
     return
   fi
 
@@ -158,10 +173,6 @@ install_eza_linux() {
 }
 
 install_powerlevel10k_linux() {
-  if [[ "$DOTFILES_TARGET" != "linux" ]]; then
-    return
-  fi
-
   local p10k_dir="${XDG_DATA_HOME:-$HOME/.local/share}/powerlevel10k"
   if [[ -e "$p10k_dir" ]]; then
     return
@@ -174,12 +185,9 @@ install_powerlevel10k_linux() {
 }
 
 bootstrap_linux_tools() {
-  if [[ "$DOTFILES_TARGET" != "linux" ]]; then
-    return
-  fi
-
   install_linux_apt_packages
   install_neovim_linux
+  install_tree_sitter_cli_linux
   install_eza_linux
   install_powerlevel10k_linux
 }
