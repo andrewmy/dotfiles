@@ -23,22 +23,28 @@ unset p10k_theme p10k_theme_candidates
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 typeset -U path PATH
-path=(
-    "$HOME/.local/bin"
-    "$HOME/Miniforge3/bin"
-    "$HOME/.antigravity/antigravity/bin"
-    "$HOME/.yarn/bin"
-    "$HOME/.config/yarn/global/node_modules/.bin"
-    "$HOME/.composer/vendor/bin"
-    "$HOME/.lmstudio/bin"
-    $path
-)
+path=("$HOME/.local/bin" $path)
+for _p in \
+    "$HOME/Miniforge3/bin" \
+    "$HOME/.antigravity/antigravity/bin" \
+    "$HOME/.yarn/bin" \
+    "$HOME/.config/yarn/global/node_modules/.bin" \
+    "$HOME/.composer/vendor/bin" \
+    "$HOME/.lmstudio/bin"; do
+    [[ -d $_p ]] && path=($_p $path)
+done
+unset _p
 export PATH
 # in a .zshrc.local file:
 # path=("$HOME/some/bin" $path)
 
 fpath=("$HOME/.zsh/comp" $fpath)
-autoload -Uz compinit && compinit
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
 
 [[ -r "$HOME/.zsh/keybindings.zsh" ]] && source "$HOME/.zsh/keybindings.zsh"
 if [[ -d "$HOME/.zsh/functions" ]]; then

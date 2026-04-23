@@ -34,18 +34,18 @@
       "Bash(gh pr checkout:*)",
       "Bash(gh pr edit:*)",
       "Bash(gh pr checks:*)",
-      "mcp__claude_ai_Atlassian__getJiraIssue",
+      "mcp__plugin_atlassian_atlassian__getJiraIssue",
       "Bash(bin/rspec:*)",
       "Bash(rubocop:*)",
-      "mcp__claude_ai_Atlassian__searchJiraIssuesUsingJql",
-      "mcp__claude_ai_Slack__slack_search_public_and_private",
+      "mcp__plugin_atlassian_atlassian__searchJiraIssuesUsingJql",
+      "mcp__plugin_slack_slack__slack_search_public_and_private",
       "mcp__wick__wick_fetch",
       "mcp__wick__wick_search",
       "Bash(xargs -I {} basename {})",
       "mcp__claude_ai_Notion__notion-search",
-      "mcp__claude_ai_Slack__slack_search_public",
-      "mcp__claude_ai_Slack__slack_search_channels",
-      "mcp__claude_ai_Slack__slack_read_thread",
+      "mcp__plugin_slack_slack__slack_search_public",
+      "mcp__plugin_slack_slack__slack_search_channels",
+      "mcp__plugin_slack_slack__slack_read_thread",
       "Bash(bin/rails generate:*)",
       "Bash(bin/rails db:migrate:*)",
       "mcp__plugin_serena_serena__write_memory",
@@ -140,5 +140,7 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "skipAutoPermissionPrompt": true,
+  "advisorModel": "opus"
 }

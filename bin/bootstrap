@@ -24,6 +24,24 @@ bootstrap_packages() {
   fi
 }
 
+bootstrap_uv_tools() {
+  local manifest="$DOTFILES_ROOT/packages/uv-tools.txt"
+
+  if [[ ! -f "$manifest" ]]; then
+    return
+  fi
+
+  if ! command -v uv >/dev/null 2>&1; then
+    echo "Skipping uv tools bootstrap: uv not available."
+    return
+  fi
+
+  while IFS= read -r tool; do
+    [[ -z "$tool" || "$tool" == \#* ]] && continue
+    uv tool install "$tool"
+  done < "$manifest"
+}
+
 bootstrap_neovim() {
   export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 
@@ -46,7 +64,8 @@ link() {
 
   mkdir -p "$(dirname "$target")"
   if [[ -d "$target" && ! -L "$target" ]]; then
-    rm -rf "$target"
+    echo "link: '$target' is a real directory — remove manually first" >&2
+    return 1
   fi
   ln -sfn "$src" "$target"
 }
@@ -60,6 +79,7 @@ fi
 
 set_platform_paths
 bootstrap_packages
+bootstrap_uv_tools
 
 if [[ "$DOTFILES_TARGET" == "linux" ]]; then
   bootstrap_linux_tools
