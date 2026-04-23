@@ -4,6 +4,7 @@ tap "jez/formulae"
 tap "krishkrosh/apps"
 tap "mike-engel/jwt-cli"
 tap "symfony-cli/tap"
+tap "wickproject/wick"
 # Search tool like grep, but optimized for programmers
 brew "ack"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -67,6 +68,7 @@ brew "jez/formulae/git-heatmap"
 # Super fast CLI tool to decode and encode JWTs built in Rust
 brew "mike-engel/jwt-cli/jwt-cli"
 brew "rv"
+brew "wick"
 # Universal chat app powered by Matrix
 cask "beeper"
 # Tool to customise input devices and automate computer systems

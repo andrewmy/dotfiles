@@ -87,5 +87,7 @@ if (( $+commands[rv] )); then
 fi
 
 export FZF_DEFAULT_OPTS="--height 40% --border"
+export WICK_TELEMETRY=0
+export RTK_TELEMETRY_DISABLED=1
 
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
