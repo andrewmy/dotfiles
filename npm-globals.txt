@@ -2,5 +2,6 @@ ccusage
 cline
 gitnexus
 opencode-ai
+summarize
 typescript
 wrangler
