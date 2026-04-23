@@ -3,7 +3,7 @@
 My macOS and Linux dotfiles with a fast setup path:
 
 1. Auto-detect platform (`DOTFILES_TARGET=auto` by default)
-2. Install packages from `Brewfile` on macOS
+2. Install packages from `packages/Brewfile` on macOS
 3. Symlink tracked config from `home/` into `$HOME`, with XDG files under `home/.config/` and app-specific exceptions under `app-config/`
 4. Keep secrets and machine-specific identity in local-only files
 

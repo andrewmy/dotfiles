@@ -18,7 +18,7 @@ bootstrap_packages() {
     fi
 
     eval "$(/opt/homebrew/bin/brew shellenv || /usr/local/bin/brew shellenv)"
-    brew bundle --file="$DOTFILES_ROOT/Brewfile"
+    brew bundle --file="$DOTFILES_ROOT/packages/Brewfile"
   else
     echo "Skipping Homebrew package bootstrap for linux."
   fi

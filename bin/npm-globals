@@ -5,7 +5,7 @@ DOTFILES_BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=common.sh
 source "$DOTFILES_BIN_DIR/common.sh"
 
-MANIFEST_PATH="$DOTFILES_ROOT/npm-globals.txt"
+MANIFEST_PATH="$DOTFILES_ROOT/packages/npm-globals.txt"
 
 usage() {
   cat <<'EOF'
