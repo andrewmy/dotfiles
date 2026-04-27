@@ -19,6 +19,7 @@ bootstrap_packages() {
 
     eval "$(/opt/homebrew/bin/brew shellenv || /usr/local/bin/brew shellenv)"
     brew bundle --file="$DOTFILES_ROOT/packages/Brewfile"
+    brew upgrade
   else
     echo "Skipping Homebrew package bootstrap for linux."
   fi
@@ -56,6 +57,12 @@ bootstrap_neovim() {
     "$data_home/nvim/lazy/nvim-treesitter/parser"
 
   nvim --headless -i NONE "+Lazy! restore" "+TSUpdate" +qa
+}
+
+bootstrap_agent_skills() {
+  npx skills@latest add JuliusBrussee/caveman -g --all -y --skill '*'
+  npx skills@latest add mattpocock/skills/grill-me -g --all -y
+  npx skills@latest update -g
 }
 
 link() {
@@ -120,6 +127,8 @@ fi
 
 "$DOTFILES_BIN_DIR/vscode-insiders-extensions" install
 "$DOTFILES_BIN_DIR/npm-globals" install
+
+bootstrap_agent_skills
 
 ln -sfn "$HOME/.config/git/ignore" "$HOME/.gitignore"
 
