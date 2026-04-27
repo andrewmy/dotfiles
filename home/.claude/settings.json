@@ -141,6 +141,7 @@
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
-  "skipAutoPermissionPrompt": true,
-  "advisorModel": "opus"
+  "advisorModel": "opus",
+  "theme": "auto",
+  "verbose": true
 }
