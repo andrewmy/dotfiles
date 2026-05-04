@@ -53,6 +53,7 @@ link_with_backup "$DOTFILES_ROOT/home/.zsh/keybindings.zsh" "$HOME/.zsh/keybindi
 
 link_with_backup "$HOME_CONFIG_ROOT/nvim" "$HOME/.config/nvim"
 link_with_backup "$HOME_CONFIG_ROOT/mc" "$HOME/.config/mc"
+link_with_backup "$HOME_CONFIG_ROOT/gh-dash/config.yml" "$HOME/.config/gh-dash/config.yml"
 link_with_backup "$HOME_CONFIG_ROOT/htop/htoprc" "$HOME/.config/htop/htoprc"
 link_with_backup "$HOME_CONFIG_ROOT/git/ignore" "$HOME/.config/git/ignore"
 link_with_backup "$HOME/.config/git/ignore" "$HOME/.gitignore"
@@ -76,4 +77,9 @@ fi
 if command -v npm >/dev/null 2>&1; then
   echo "If this machine should define the shared npm globals, run:"
   echo "  ./bin/npm-globals update"
+fi
+
+if command -v gh >/dev/null 2>&1; then
+  echo "If this machine should define the shared gh extensions, run:"
+  echo "  ./bin/gh-extensions update"
 fi

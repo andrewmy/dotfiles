@@ -107,6 +107,7 @@ link "$DOTFILES_ROOT/home/.claude/statusline-command.sh" "$HOME/.claude/statusli
 link "$HOME_CONFIG_ROOT/nvim" "$HOME/.config/nvim"
 link "$HOME_CONFIG_ROOT/mc" "$HOME/.config/mc"
 link "$HOME_CONFIG_ROOT/gh/config.yml" "$HOME/.config/gh/config.yml"
+link "$HOME_CONFIG_ROOT/gh-dash/config.yml" "$HOME/.config/gh-dash/config.yml"
 link "$HOME_CONFIG_ROOT/htop/htoprc" "$HOME/.config/htop/htoprc"
 link "$HOME_CONFIG_ROOT/git/ignore" "$HOME/.config/git/ignore"
 link "$HOME_CONFIG_ROOT/zed/settings.json" "$HOME/.config/zed/settings.json"
@@ -127,6 +128,8 @@ fi
 
 "$DOTFILES_BIN_DIR/vscode-insiders-extensions" install
 "$DOTFILES_BIN_DIR/npm-globals" install
+"$DOTFILES_BIN_DIR/gh-extensions" install
+"$DOTFILES_BIN_DIR/gh-extensions" upgrade
 
 bootstrap_agent_skills
 

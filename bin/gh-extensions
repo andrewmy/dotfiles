@@ -1,0 +1,151 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES_BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=common.sh
+source "$DOTFILES_BIN_DIR/common.sh"
+
+MANIFEST_PATH="$DOTFILES_ROOT/packages/gh-extensions.txt"
+
+usage() {
+  cat <<'EOF'
+Usage: ./bin/gh-extensions <update|install|upgrade|sync>
+
+  update   Overwrite the tracked manifest from the currently installed extensions
+  install  Install extensions missing from the tracked manifest
+  upgrade  Upgrade all installed extensions
+  sync     Reconcile the local install with the tracked manifest
+EOF
+}
+
+gh_available() {
+  command -v gh >/dev/null 2>&1
+}
+
+require_gh() {
+  if ! gh_available; then
+    echo "gh is not in PATH."
+    exit 1
+  fi
+}
+
+skip_without_gh() {
+  local label="$1"
+
+  if gh_available; then
+    return 1
+  fi
+
+  echo "Skipping $label: gh is not in PATH."
+  return 0
+}
+
+require_manifest() {
+  if [[ ! -f "$MANIFEST_PATH" ]]; then
+    echo "Missing manifest: $MANIFEST_PATH"
+    exit 1
+  fi
+}
+
+skip_without_manifest() {
+  local label="$1"
+
+  if [[ -f "$MANIFEST_PATH" ]]; then
+    return 1
+  fi
+
+  echo "Skipping $label: no manifest at $MANIFEST_PATH."
+  return 0
+}
+
+installed_extensions() {
+  gh extension list 2>/dev/null | awk -F '\t' '{print $2}' | LC_ALL=C sort -u
+}
+
+installed_extension_pairs() {
+  gh extension list 2>/dev/null | awk -F '\t' '{print $1 "\t" $2}'
+}
+
+manifest_extensions() {
+  if [[ ! -f "$MANIFEST_PATH" ]]; then
+    return 0
+  fi
+
+  sed -e 's/[[:space:]]*$//' -e '/^[[:space:]]*#/d' -e '/^[[:space:]]*$/d' "$MANIFEST_PATH" | LC_ALL=C sort -u
+}
+
+update_manifest() {
+  require_gh
+
+  installed_extensions > "$MANIFEST_PATH"
+  echo "Updated $MANIFEST_PATH"
+}
+
+install_from_manifest() {
+  if skip_without_gh "gh extensions"; then
+    return 0
+  fi
+
+  if skip_without_manifest "gh extensions"; then
+    return 0
+  fi
+
+  local missing
+  missing="$(comm -23 <(manifest_extensions) <(installed_extensions))"
+
+  if [[ -z "$missing" ]]; then
+    echo "All gh extensions already installed."
+  else
+    while IFS= read -r extension; do
+      [[ -n "$extension" ]] || continue
+      echo "Installing $extension"
+      gh extension install "$extension"
+    done <<< "$missing"
+  fi
+}
+
+upgrade_extensions() {
+  if skip_without_gh "gh extension upgrades"; then
+    return 0
+  fi
+
+  gh extension upgrade --all
+}
+
+sync_to_manifest() {
+  require_gh
+  require_manifest
+
+  install_from_manifest
+
+  local installed_pairs
+  installed_pairs="$(installed_extension_pairs)"
+
+  while IFS= read -r extension; do
+    [[ -n "$extension" ]] || continue
+    local extension_name
+    extension_name="$(awk -F '\t' -v repo="$extension" '$2 == repo {print $1; exit}' <<< "$installed_pairs")"
+    [[ -n "$extension_name" ]] || continue
+    echo "Removing $extension_name ($extension)"
+    gh extension remove "$extension_name"
+  done < <(comm -13 <(manifest_extensions) <(installed_extensions))
+}
+
+case "${1:-}" in
+  update)
+    update_manifest
+    ;;
+  install)
+    install_from_manifest
+    ;;
+  upgrade)
+    upgrade_extensions
+    ;;
+  sync)
+    sync_to_manifest
+    ;;
+  *)
+    usage
+    exit 1
+    ;;
+esac

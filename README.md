@@ -27,8 +27,7 @@ exec zsh
 You can override with `DOTFILES_TARGET=darwin` or `DOTFILES_TARGET=linux`.
 
 On macOS, it bootstraps Xcode Command Line Tools + Homebrew and runs `brew bundle`.
-On Linux, it installs some core tools with `apt`, installs Neovim and eza from upstream binaries, installs Powerlevel10k manually, and manages symlinks.
-If you want Treesitter-based Neovim plugins such as `nvim-ts-autotag` to work on Debian/Ubuntu, install `build-essential` manually. The bootstrap scripts do not install a C compiler.
+On Linux, it installs some core tools with `apt` (including `build-essential`), installs Neovim and eza from upstream binaries, installs Powerlevel10k manually, and manages symlinks.
 
 ## Make an existing machine use this config
 
@@ -69,17 +68,30 @@ These files are expected to be created manually on each machine:
 3. Commit and push
 4. On other machines: `git pull` and re-run `./bin/bootstrap`
 
-## VS Code Extensions
+## Shared Tool Manifests
 
 ```Shell
 ./bin/vscode-insiders-extensions update
 ./bin/vscode-insiders-extensions install
 ./bin/vscode-insiders-extensions sync
+
+./bin/npm-globals update
+./bin/npm-globals install
+./bin/npm-globals sync
+
+./bin/gh-extensions update
+./bin/gh-extensions install
+./bin/gh-extensions upgrade
+./bin/gh-extensions sync
 ```
 
-`update` overwrites the manifest from the current machine.
-`install` is add-only and installs anything missing from the manifest.
-`sync` is strict and uninstalls anything not listed in the manifest.
+These helpers all use the same basic shape:
 
-`./bin/bootstrap` runs the add-only `install` step automatically.
+- `update` overwrites the tracked manifest from the current machine
+- `install` is add-only and installs anything missing from the manifest
+- `sync` is strict and uninstalls anything not listed in the manifest
+
+`gh-extensions` also has `upgrade`, which runs `gh extension upgrade --all`.
+
+`./bin/bootstrap` runs the add-only `install` step automatically for all three helpers, then upgrades installed GitHub CLI extensions.
 `update` stays manual so one machine does not silently rewrite the shared manifest.
