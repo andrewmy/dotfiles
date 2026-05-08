@@ -1,0 +1,185 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES_BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=common.sh
+source "$DOTFILES_BIN_DIR/common.sh"
+
+LOCK_PATH="$DOTFILES_ROOT/home/.agents/.skill-lock.json"
+
+usage() {
+  cat <<'EOF'
+Usage: ./bin/agent-skills <update|install|upgrade|sync|link>
+
+  update   Overwrite the tracked lock file from the current global skills lock
+  install  Restore global skills from the tracked lock file
+  upgrade  Upgrade global skills using the skills CLI lock metadata
+  sync     Link the lock, restore missing skills, then upgrade tracked skills
+  link     Link the tracked lock file into the skills CLI global lock location
+EOF
+}
+
+skills_lock_path() {
+  if [[ -n "${XDG_STATE_HOME:-}" ]]; then
+    echo "$XDG_STATE_HOME/skills/.skill-lock.json"
+  else
+    echo "$HOME/.agents/.skill-lock.json"
+  fi
+}
+
+skills_available() {
+  command -v npx >/dev/null 2>&1 && command -v node >/dev/null 2>&1
+}
+
+skip_without_skills_cli() {
+  local label="$1"
+
+  if skills_available; then
+    return 1
+  fi
+
+  echo "Skipping $label: npx or node is not in PATH."
+  return 0
+}
+
+require_skills_cli() {
+  if ! skills_available; then
+    echo "npx and node are required."
+    exit 1
+  fi
+}
+
+require_lock() {
+  if [[ ! -f "$LOCK_PATH" ]]; then
+    echo "Missing skills lock: $LOCK_PATH"
+    exit 1
+  fi
+}
+
+link_lock() {
+  require_lock
+
+  local target
+  target="$(skills_lock_path)"
+  mkdir -p "$(dirname "$target")"
+  ln -sfn "$LOCK_PATH" "$target"
+}
+
+update_lock() {
+  local source
+  source="$(skills_lock_path)"
+
+  if [[ ! -f "$source" ]]; then
+    echo "Missing global skills lock: $source"
+    exit 1
+  fi
+
+  if [[ -f "$LOCK_PATH" && "$source" -ef "$LOCK_PATH" ]]; then
+    echo "Tracked skills lock already linked at $source."
+    return 0
+  fi
+
+  mkdir -p "$(dirname "$LOCK_PATH")"
+  cp "$source" "$LOCK_PATH"
+  echo "Updated $LOCK_PATH"
+}
+
+write_install_plan() {
+  local output_path="$1"
+
+  node - "$LOCK_PATH" "$output_path" <<'NODE'
+const fs = require("fs");
+
+const [, , lockPath, outputPath] = process.argv;
+const lock = JSON.parse(fs.readFileSync(lockPath, "utf8"));
+const groups = new Map();
+
+for (const [skillName, entry] of Object.entries(lock.skills || {})) {
+  if (!entry || !entry.source) continue;
+
+  const source = entry.ref ? `${entry.source}#${entry.ref}` : entry.source;
+  if (!groups.has(source)) groups.set(source, []);
+  groups.get(source).push(skillName);
+}
+
+const lines = [...groups.entries()]
+  .sort(([left], [right]) => left.localeCompare(right))
+  .map(([source, skills]) => [source, ...skills.sort()].join("\t"));
+
+fs.writeFileSync(outputPath, `${lines.join("\n")}${lines.length ? "\n" : ""}`);
+NODE
+}
+
+install_from_lock() {
+  if skip_without_skills_cli "agent skills"; then
+    return 0
+  fi
+
+  require_lock
+
+  local temp_file
+  temp_file="$(mktemp "${TMPDIR:-/tmp}/dotfiles-agent-skills.XXXXXX")"
+  write_install_plan "$temp_file"
+
+  if [[ ! -s "$temp_file" ]]; then
+    echo "No agent skills listed in $LOCK_PATH."
+    rm -f "$temp_file"
+    link_lock
+    return 0
+  fi
+
+  while IFS=$'\t' read -r source skill_names; do
+    [[ -n "$source" ]] || continue
+
+    local args=(skills@latest add "$source" -g -y --agent '*')
+    local skill
+    IFS=$'\t' read -r -a skills <<< "$skill_names"
+    for skill in "${skills[@]}"; do
+      [[ -n "$skill" ]] || continue
+      args+=(--skill "$skill")
+    done
+
+    echo "Installing agent skills from $source"
+    npx "${args[@]}"
+  done < "$temp_file"
+
+  rm -f "$temp_file"
+  link_lock
+}
+
+upgrade_skills() {
+  if skip_without_skills_cli "agent skill upgrades"; then
+    return 0
+  fi
+
+  require_lock
+  link_lock
+  npx skills@latest update -g -y
+}
+
+sync_skills() {
+  install_from_lock
+  upgrade_skills
+}
+
+case "${1:-}" in
+  update)
+    update_lock
+    ;;
+  install)
+    install_from_lock
+    ;;
+  upgrade)
+    upgrade_skills
+    ;;
+  sync)
+    sync_skills
+    ;;
+  link)
+    link_lock
+    ;;
+  *)
+    usage
+    exit 1
+    ;;
+esac

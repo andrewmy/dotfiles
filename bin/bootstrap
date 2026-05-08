@@ -60,9 +60,8 @@ bootstrap_neovim() {
 }
 
 bootstrap_agent_skills() {
-  npx skills@latest add JuliusBrussee/caveman -g --all -y --skill '*'
-  npx skills@latest add mattpocock/skills/grill-me -g --all -y
-  npx skills@latest update -g
+  "$DOTFILES_BIN_DIR/agent-skills" install
+  "$DOTFILES_BIN_DIR/agent-skills" upgrade
 }
 
 link() {
@@ -130,7 +129,6 @@ fi
 "$DOTFILES_BIN_DIR/npm-globals" install
 "$DOTFILES_BIN_DIR/gh-extensions" install
 "$DOTFILES_BIN_DIR/gh-extensions" upgrade
-
 bootstrap_agent_skills
 
 ln -sfn "$HOME/.config/git/ignore" "$HOME/.gitignore"

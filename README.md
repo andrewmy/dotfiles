@@ -83,15 +83,21 @@ These files are expected to be created manually on each machine:
 ./bin/gh-extensions install
 ./bin/gh-extensions upgrade
 ./bin/gh-extensions sync
+
+./bin/agent-skills update
+./bin/agent-skills install
+./bin/agent-skills upgrade
+./bin/agent-skills sync
 ```
 
-These helpers all use the same basic shape:
+These helpers use the same basic shape:
 
 - `update` overwrites the tracked manifest from the current machine
 - `install` is add-only and installs anything missing from the manifest
-- `sync` is strict and uninstalls anything not listed in the manifest
+- `sync` is strict and uninstalls anything not listed in the manifest, except `agent-skills`, where global skills are only restored/upgraded
 
 `gh-extensions` also has `upgrade`, which runs `gh extension upgrade --all`.
+`agent-skills` tracks the skills CLI global lock at `home/.agents/.skill-lock.json` and links it to `~/.agents/.skill-lock.json`.
 
-`./bin/bootstrap` runs the add-only `install` step automatically for all three helpers, then upgrades installed GitHub CLI extensions.
+`./bin/bootstrap` runs the add-only `install` step automatically for all helpers, then upgrades installed GitHub CLI extensions and agent skills.
 `update` stays manual so one machine does not silently rewrite the shared manifest.

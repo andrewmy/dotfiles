@@ -50,6 +50,7 @@ done
 
 link_with_backup "$DOTFILES_ROOT/home/.zsh/functions" "$HOME/.zsh/functions"
 link_with_backup "$DOTFILES_ROOT/home/.zsh/keybindings.zsh" "$HOME/.zsh/keybindings.zsh"
+link_with_backup "$DOTFILES_ROOT/home/.agents/.skill-lock.json" "$HOME/.agents/.skill-lock.json"
 
 link_with_backup "$HOME_CONFIG_ROOT/nvim" "$HOME/.config/nvim"
 link_with_backup "$HOME_CONFIG_ROOT/mc" "$HOME/.config/mc"
@@ -82,4 +83,9 @@ fi
 if command -v gh >/dev/null 2>&1; then
   echo "If this machine should define the shared gh extensions, run:"
   echo "  ./bin/gh-extensions update"
+fi
+
+if command -v npx >/dev/null 2>&1 && command -v node >/dev/null 2>&1; then
+  echo "If this machine should define the shared agent skills, run:"
+  echo "  ./bin/agent-skills update"
 fi
