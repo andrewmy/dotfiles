@@ -17,23 +17,53 @@
   "mcp": {
     "gitnexus": {
       "type": "local",
-      "command": ["/opt/homebrew/bin/gitnexus", "mcp"]
+      "command": [
+        "mcp-compressor",
+        "--compression-level",
+        "high",
+        "--toonify",
+        "{\"mcpServers\":{\"gitnexus\":{\"command\":\"/opt/homebrew/bin/gitnexus\",\"args\":[\"mcp\"]}}}"
+      ]
     },
     "context7": {
       "type": "local",
-      "command": ["npx", "-y", "@upstash/context7-mcp"]
+      "command": [
+        "mcp-compressor",
+        "--compression-level",
+        "high",
+        "--toonify",
+        "{\"mcpServers\":{\"context7\":{\"command\":\"npx\",\"args\":[\"-y\",\"@upstash/context7-mcp\"]}}}"
+      ]
     },
     "playwright": {
       "type": "local",
-      "command": ["npx", "@playwright/mcp@latest"]
+      "command": [
+        "mcp-compressor",
+        "--compression-level",
+        "high",
+        "--toonify",
+        "{\"mcpServers\":{\"playwright\":{\"command\":\"npx\",\"args\":[\"@playwright/mcp@latest\"]}}}"
+      ]
     },
     "serena": {
       "type": "local",
-      "command": ["uvx", "--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server"]
+      "command": [
+        "mcp-compressor",
+        "--compression-level",
+        "high",
+        "--toonify",
+        "{\"mcpServers\":{\"serena\":{\"command\":\"uvx\",\"args\":[\"--from\",\"git+https://github.com/oraios/serena\",\"serena\",\"start-mcp-server\"]}}}"
+      ]
     },
     "wick": {
       "type": "local",
-      "command": ["/opt/homebrew/bin/wick", "serve", "--mcp"]
+      "command": [
+        "mcp-compressor",
+        "--compression-level",
+        "high",
+        "--toonify",
+        "{\"mcpServers\":{\"wick\":{\"command\":\"/opt/homebrew/bin/wick\",\"args\":[\"serve\",\"--mcp\"]}}}"
+      ]
     }
   }
 }
