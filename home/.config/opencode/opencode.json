@@ -65,5 +65,16 @@
         "{\"mcpServers\":{\"wick\":{\"command\":\"/opt/homebrew/bin/wick\",\"args\":[\"serve\",\"--mcp\"]}}}"
       ]
     }
+  },
+  "plugin": [
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "opencode-goal-plugin"
+  ],
+  "command": {
+    "goal": {
+      "description": "Set a session-scoped goal and auto-continue until complete.",
+      "template": "$ARGUMENTS",
+      "agent": "build"
+    }
   }
 }
