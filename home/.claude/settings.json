@@ -36,11 +36,12 @@
       "Bash(python3 -m json.tool)",
       "Bash(docker manifest inspect *)",
       "Bash(bin/rspec:*)",
-      "Bash(rubocop:*)",
       "Bash(bundle exec rubocop:*)",
       "Bash(bundle show:*)",
       "Bash(bin/rails generate:*)",
       "Bash(bin/rails db:migrate:*)",
+      "Bash(npm view *)",
+      "Bash(mcp-compressor --version)",
       "WebSearch",
       "mcp__plugin_context7_context7__resolve-library-id",
       "mcp__plugin_context7_context7__query-docs",
@@ -70,6 +71,11 @@
     "deny": [
       "Bash(rm:*)",
       "Bash(curl:*)",
+      "Bash(npx:*)",
+      "Bash(pnpm dlx:*)",
+      "Bash(yarn dlx:*)",
+      "Bash(bunx:*)",
+      "Bash(pipx:*)",
       "Read(./.env)",
       "Read(./.env.*)",
       "Read(./config/secrets/.*)",
@@ -129,7 +135,6 @@
     "feature-dev@claude-plugins-official": true,
     "github@claude-plugins-official": true,
     "learning-output-style@claude-plugins-official": true,
-    "Notion@claude-plugins-official": true,
     "playwright@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
     "serena@claude-plugins-official": true,
@@ -141,10 +146,11 @@
     "skill-creator@claude-plugins-official": true,
     "php-lsp@claude-plugins-official": true,
     "phpactor@claude-code-lsps": true,
-    "ruby-lsp@claude-plugins-official": true,
+    "ruby-lsp@claude-plugins-official": false,
     "ruby-lsp@claude-code-lsps": true,
     "vue-volar@claude-code-lsps": true,
-    "caveman@caveman": true
+    "caveman@caveman": true,
+    "ponytail@ponytail": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -152,11 +158,19 @@
         "source": "github",
         "repo": "JuliusBrussee/caveman"
       }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
     }
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
-  "advisorModel": "opus",
+  "tui": "fullscreen",
+  "skipWorkflowUsageWarning": true,
   "theme": "auto",
-  "verbose": true
+  "verbose": true,
+  "model": "claude-fable-5[1m]"
 }
