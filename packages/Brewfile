@@ -17,6 +17,7 @@ brew "eza"
 brew "fd"
 # Command-line fuzzy finder written in Go
 brew "fzf"
+brew "fnm"
 # Open-source, cross-platform JavaScript runtime environment
 brew "node"
 # GitHub command-line tool

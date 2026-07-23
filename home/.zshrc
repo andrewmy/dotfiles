@@ -97,3 +97,8 @@ export WICK_TELEMETRY=0
 export RTK_TELEMETRY_DISABLED=1
 
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+export PATH="$PATH:$HOME/.lmstudio/bin"
+
+eval "$(fnm env --use-on-cd)"
+
