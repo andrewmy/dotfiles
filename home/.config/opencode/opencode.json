@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "instructions": ["~/.agents/AGENTS.md", "~/.agents/RTK.md"],
   "provider": {
     "lmstudio": {
       "npm": "@ai-sdk/openai-compatible",

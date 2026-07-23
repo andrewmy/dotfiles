@@ -46,15 +46,6 @@
       "installedAt": "2026-05-07T10:52:08.664Z",
       "updatedAt": "2026-07-23T15:13:54.669Z"
     },
-    "simplify": {
-      "source": "tavaresgmg/codex-simplify-skill",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/tavaresgmg/codex-simplify-skill.git",
-      "skillPath": "SKILL.md",
-      "skillFolderHash": "a55d8e714057d2f99728dd253720a1554048c149",
-      "installedAt": "2026-05-07T10:53:23.212Z",
-      "updatedAt": "2026-05-07T10:53:23.212Z"
-    },
     "prototype": {
       "source": "mattpocock/skills",
       "sourceType": "github",
@@ -342,6 +333,42 @@
       "skillFolderHash": "31af0156520819c15d19358a8e0bd36f82e67ad3",
       "installedAt": "2026-07-09T07:44:35.235Z",
       "updatedAt": "2026-07-23T15:15:16.444Z"
+    },
+    "caveman-commit": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-commit/SKILL.md",
+      "skillFolderHash": "6ba13fa3503e9607eed8f94828b524510d83b7ef",
+      "installedAt": "2026-07-23T18:43:29.082Z",
+      "updatedAt": "2026-07-23T18:43:29.082Z"
+    },
+    "caveman-compress": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-compress/SKILL.md",
+      "skillFolderHash": "1284ac809fbdaeb9e871f84ee850aebe10c85030",
+      "installedAt": "2026-07-23T18:43:29.084Z",
+      "updatedAt": "2026-07-23T18:43:29.084Z"
+    },
+    "caveman-help": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-help/SKILL.md",
+      "skillFolderHash": "b4f5ebc5f3ce9bfa652996b5161bbe3cc0b88297",
+      "installedAt": "2026-07-23T18:43:29.084Z",
+      "updatedAt": "2026-07-23T18:43:29.084Z"
+    },
+    "caveman-review": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-review/SKILL.md",
+      "skillFolderHash": "2d9762b7aec395b9713fde57fb8965bc3bbd2c3f",
+      "installedAt": "2026-07-23T18:43:29.085Z",
+      "updatedAt": "2026-07-23T18:43:29.085Z"
     }
   },
   "dismissed": {
