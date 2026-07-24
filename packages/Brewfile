@@ -64,6 +64,8 @@ brew "uv"
 brew "watch"
 # Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
 # Heatmap of oft-edited files
 brew "jez/formulae/git-heatmap"
 # Super fast CLI tool to decode and encode JWTs built in Rust

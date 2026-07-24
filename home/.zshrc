@@ -57,7 +57,6 @@ fi
 export DOCKER_BUILDKIT=1
 
 alias phpqa='docker run --init -it --rm -v $(pwd):/project -v $(pwd)/tmp-phpqa:/tmp -w /project jakzal/phpqa:alpine'
-alias stern-prod='stern --namespace prod --kubeconfig ~/.kube/awsconfig-prod'
 alias serena='uvx --from git+https://github.com/oraios/serena serena'
 if (( $+commands[mactop] )); then
     alias top=mactop
@@ -75,7 +74,7 @@ alias du=ncdu
 alias ll="ls --color=auto -h -H --group-directories-first --time-style=long-iso -lA"
 alias serena_list="lsof -iTCP -sTCP:LISTEN | grep 2428"
 
-zstyle ':completion:*' menu select
+zstyle ':completion:*' menu no # fzf-tab replaces the native menu
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/compcache"
 zstyle ':completion:*' matcher-list \
@@ -93,6 +92,20 @@ if (( $+commands[rv] )); then
 fi
 
 export FZF_DEFAULT_OPTS="--height 40% --border"
+
+# znap: plugin loader + cached tool inits (lifted from dunglas/prompt-mac)
+ZNAP_DIR="$HOME/.znap"
+[[ -r "$ZNAP_DIR/znap.zsh" ]] ||
+    git clone --depth 1 https://github.com/marlonrichert/zsh-snap.git "$ZNAP_DIR"
+source "$ZNAP_DIR/znap.zsh"
+zstyle ':znap:*' repos-dir "$ZNAP_DIR/repos"
+
+znap source Aloxaf/fzf-tab
+znap source zsh-users/zsh-autosuggestions
+znap source zdharma-continuum/fast-syntax-highlighting # keep last of the plugins
+
+znap eval zoxide 'zoxide init zsh'
+znap eval fzf 'fzf --zsh'
 export WICK_TELEMETRY=0
 export RTK_TELEMETRY_DISABLED=1
 
