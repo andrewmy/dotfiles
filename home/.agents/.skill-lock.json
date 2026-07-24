@@ -341,7 +341,7 @@
       "skillPath": "skills/caveman-commit/SKILL.md",
       "skillFolderHash": "6ba13fa3503e9607eed8f94828b524510d83b7ef",
       "installedAt": "2026-07-23T18:43:29.082Z",
-      "updatedAt": "2026-07-23T18:43:29.082Z"
+      "updatedAt": "2026-07-23T18:50:47.186Z"
     },
     "caveman-compress": {
       "source": "JuliusBrussee/caveman",
@@ -350,7 +350,7 @@
       "skillPath": "skills/caveman-compress/SKILL.md",
       "skillFolderHash": "1284ac809fbdaeb9e871f84ee850aebe10c85030",
       "installedAt": "2026-07-23T18:43:29.084Z",
-      "updatedAt": "2026-07-23T18:43:29.084Z"
+      "updatedAt": "2026-07-23T18:50:47.188Z"
     },
     "caveman-help": {
       "source": "JuliusBrussee/caveman",
@@ -359,7 +359,7 @@
       "skillPath": "skills/caveman-help/SKILL.md",
       "skillFolderHash": "b4f5ebc5f3ce9bfa652996b5161bbe3cc0b88297",
       "installedAt": "2026-07-23T18:43:29.084Z",
-      "updatedAt": "2026-07-23T18:43:29.084Z"
+      "updatedAt": "2026-07-23T18:50:47.189Z"
     },
     "caveman-review": {
       "source": "JuliusBrussee/caveman",
@@ -368,7 +368,7 @@
       "skillPath": "skills/caveman-review/SKILL.md",
       "skillFolderHash": "2d9762b7aec395b9713fde57fb8965bc3bbd2c3f",
       "installedAt": "2026-07-23T18:43:29.085Z",
-      "updatedAt": "2026-07-23T18:43:29.085Z"
+      "updatedAt": "2026-07-23T18:50:47.189Z"
     }
   },
   "dismissed": {

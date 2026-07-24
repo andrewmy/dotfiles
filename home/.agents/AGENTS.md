@@ -19,4 +19,4 @@ Use wick_search for web searches.
 
 ## Debugging sessions
 
-After ANY debugging session (red CI, Sentry issue, failing spec, "why is this broken"), end the final message with a short decision-tree walkthrough (~5–10 lines): trigger clue, order of what was examined and why, each discarded hypothesis + the evidence that killed it, the load-bearing observation, one generalizable heuristic. Spec lives in the `diagnosing-bugs` skill (Phase 6) — apply it even when that skill wasn't invoked. When the user seems unhurried, offer `/debug-quiz` (interactive predict→reveal→compare coaching).
+After ANY debugging session (red CI, Sentry issue, failing spec, "why is this broken"), end the final message with a short decision-tree walkthrough (~5–10 lines): trigger clue, order of what was examined and why, each discarded hypothesis + the evidence that killed it, the load-bearing observation, one generalizable heuristic. Apply this whether or not the `diagnosing-bugs` skill was invoked (that skill is third-party managed — this section is the spec, do not edit the skill). When the user seems unhurried, offer `/debug-quiz` (interactive predict→reveal→compare coaching).
