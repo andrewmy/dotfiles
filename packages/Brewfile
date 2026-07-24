@@ -52,10 +52,10 @@ brew "procs"
 brew "ripgrep"
 # Create beautiful image of your source code
 brew "silicon"
-# Tail multiple Kubernetes pods & their containers
-brew "stern"
 # Programmatically correct mistyped console commands
 brew "thefuck"
+# Simplified example-based man pages
+brew "tldr"
 # Terminal multiplexer
 brew "tmux"
 # Extremely fast Python package installer and resolver, written in Rust

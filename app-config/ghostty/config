@@ -43,6 +43,7 @@
 # resize-overlay-duration = 4s 200ms
 
 keybind = global:ctrl+grave_accent=toggle_quick_terminal
+quick-terminal-autohide = true
 
 macos-option-as-alt = left
 
@@ -50,8 +51,9 @@ cursor-style = bar
 
 background-opacity = 0.8
 background-blur = 7
-theme = light:Builtin Light,dark:Builtin Dark
+theme = light:"Apple System Colors Light",dark:"Apple System Colors"
 window-theme = system
+font-thicken = true
 
 window-height = 60
 keybind = shift+enter=text:\x1b\r

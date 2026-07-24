@@ -132,6 +132,8 @@ if [[ -d "$APP_CONFIG_ROOT/vscode-insiders/User/snippets" ]]; then
   link "$APP_CONFIG_ROOT/vscode-insiders/User/snippets" "$DOTFILES_VSCODE_USER_DIR/snippets"
 fi
 
+command -v tldr >/dev/null 2>&1 && tldr --update || true
+
 "$DOTFILES_BIN_DIR/vscode-insiders-extensions" install
 "$DOTFILES_BIN_DIR/npm-globals" install
 "$DOTFILES_BIN_DIR/gh-extensions" install
