@@ -95,17 +95,17 @@ export FZF_DEFAULT_OPTS="--height 40% --border"
 
 # znap: plugin loader + cached tool inits (lifted from dunglas/prompt-mac)
 ZNAP_DIR="$HOME/.znap"
-[[ -r "$ZNAP_DIR/znap.zsh" ]] ||
-    git clone --depth 1 https://github.com/marlonrichert/zsh-snap.git "$ZNAP_DIR"
-source "$ZNAP_DIR/znap.zsh"
-zstyle ':znap:*' repos-dir "$ZNAP_DIR/repos"
+if [[ -r "$ZNAP_DIR/znap.zsh" ]]; then
+    source "$ZNAP_DIR/znap.zsh"
+    zstyle ':znap:*' repos-dir "$ZNAP_DIR/repos"
 
-znap source Aloxaf/fzf-tab
-znap source zsh-users/zsh-autosuggestions
-znap source zdharma-continuum/fast-syntax-highlighting # keep last of the plugins
+    znap source Aloxaf/fzf-tab
+    znap source zsh-users/zsh-autosuggestions
+    znap source zdharma-continuum/fast-syntax-highlighting # keep last of the plugins
 
-znap eval zoxide 'zoxide init zsh'
-znap eval fzf 'fzf --zsh'
+    znap eval zoxide 'zoxide init zsh'
+    znap eval fzf 'fzf --zsh'
+fi
 export WICK_TELEMETRY=0
 export RTK_TELEMETRY_DISABLED=1
 
@@ -114,4 +114,3 @@ export RTK_TELEMETRY_DISABLED=1
 export PATH="$PATH:$HOME/.lmstudio/bin"
 
 eval "$(fnm env --use-on-cd)"
-

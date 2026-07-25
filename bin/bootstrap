@@ -43,6 +43,22 @@ bootstrap_uv_tools() {
   done < "$manifest"
 }
 
+bootstrap_znap() {
+  local znap_dir="$HOME/.znap"
+
+  [[ -r "$znap_dir/znap.zsh" ]] ||
+    git clone --depth 1 https://github.com/marlonrichert/zsh-snap.git "$znap_dir"
+
+  ZNAP_DIR="$znap_dir" zsh -fc '
+    source "$ZNAP_DIR/znap.zsh"
+    zstyle ":znap:*" repos-dir "$ZNAP_DIR/repos"
+    znap clone \
+      Aloxaf/fzf-tab \
+      zsh-users/zsh-autosuggestions \
+      zdharma-continuum/fast-syntax-highlighting
+  '
+}
+
 bootstrap_neovim() {
   export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 
@@ -90,6 +106,8 @@ bootstrap_uv_tools
 if [[ "$DOTFILES_TARGET" == "linux" ]]; then
   bootstrap_linux_tools
 fi
+
+bootstrap_znap
 
 HOME_CONFIG_ROOT="$DOTFILES_ROOT/home/.config"
 APP_CONFIG_ROOT="$DOTFILES_ROOT/app-config"
