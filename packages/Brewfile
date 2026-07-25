@@ -80,6 +80,8 @@ cask "bettertouchtool"
 cask "boop"
 # Web browser focusing on privacy
 cask "brave-browser@nightly"
+# Ghostty-based terminal manager for running coding agents in parallel
+cask "cmux"
 # Tool to show live information about the batteries in various devices
 cask "coconutbattery"
 # Disk usage utility
