@@ -1,0 +1,5 @@
+# Identity for the dotfiles repo itself (personal, on every machine);
+# pulled in by includeIf gitdir in home/.gitconfig.
+[user]
+	name = Andrejs M-J
+	email = andrejs@gmail.com

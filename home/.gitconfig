@@ -1,5 +1,11 @@
 [include]
     path = ~/.gitconfig.local
+    # per-machine (signingkey etc.); linked from home/.config/git/<machine>.gitconfig by bin/bootstrap
+    path = ~/.config/git/machine.gitconfig
+
+# dotfiles repo commits with personal identity on every machine, wherever it's cloned
+[includeIf "gitdir:**/dotfiles/"]
+    path = ~/.config/git/dotfiles.gitconfig
 
 [init]
 	defaultBranch = main
@@ -39,4 +45,15 @@
   last = log -1 HEAD
   lg = log --graph --oneline --decorate --all
   wdiff = diff --color-words
+[gpg]
+	format = ssh
 
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+	allowedSignersFile = ~/.config/git/allowed_signers
+
+[commit]
+	gpgsign = true
+
+[tag]
+	gpgsign = true
