@@ -83,6 +83,7 @@
     ],
     "defaultMode": "plan"
   },
+  "model": "claude-fable-5[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -150,7 +151,8 @@
     "ruby-lsp@claude-code-lsps": true,
     "vue-volar@claude-code-lsps": true,
     "caveman@caveman": true,
-    "ponytail@ponytail": true
+    "ponytail@ponytail": true,
+    "mattpocock-skills@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -171,6 +173,5 @@
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "auto",
-  "verbose": true,
-  "model": "claude-fable-5[1m]"
+  "verbose": true
 }
