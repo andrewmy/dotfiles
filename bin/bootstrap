@@ -142,9 +142,11 @@ if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
   MACHINE="$(scutil --get LocalHostName 2>/dev/null | tr '[:upper:]' '[:lower:]')"
   if [[ -f "$HOME_CONFIG_ROOT/git/$MACHINE.gitconfig" ]]; then
     link "$HOME_CONFIG_ROOT/git/$MACHINE.gitconfig" "$HOME/.config/git/machine.gitconfig"
-    link "$APP_CONFIG_ROOT/1password/agent.$MACHINE.toml" "$HOME/.config/1Password/ssh/agent.toml"
   else
-    echo "No per-machine config for '$MACHINE' — set LocalHostName or add home/.config/git/$MACHINE.gitconfig"
+    echo "No per-machine Git config for '$MACHINE' — set LocalHostName or add home/.config/git/$MACHINE.gitconfig"
+  fi
+  if [[ -f "$APP_CONFIG_ROOT/1password/agent.$MACHINE.toml" ]]; then
+    link "$APP_CONFIG_ROOT/1password/agent.$MACHINE.toml" "$HOME/.config/1Password/ssh/agent.toml"
   fi
 fi
 link "$HOME_CONFIG_ROOT/zed/settings.json" "$HOME/.config/zed/settings.json"
