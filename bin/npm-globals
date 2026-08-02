@@ -29,11 +29,22 @@ npm_bin() {
 write_installed_globals() {
   local output_path="$1"
 
-  npm list -g --depth=0 --parseable 2>/dev/null \
-    | tail -n +2 \
-    | xargs -I {} basename {} \
-    | grep -v '^npm$' \
-    | LC_ALL=C sort -u > "$output_path"
+  npm list -g --depth=0 --json 2>/dev/null \
+    | node -e '
+        let input = "";
+        process.stdin.setEncoding("utf8");
+        process.stdin.on("data", chunk => input += chunk);
+        process.stdin.on("end", () => {
+          const dependencies = JSON.parse(input).dependencies ?? {};
+          const packages = Object.keys(dependencies)
+            .filter(packageName => packageName !== "npm")
+            .sort();
+
+          if (packages.length > 0) {
+            process.stdout.write(`${packages.join("\n")}\n`);
+          }
+        });
+      ' > "$output_path"
 }
 
 write_manifest_globals() {
