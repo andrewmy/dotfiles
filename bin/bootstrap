@@ -7,7 +7,8 @@ source "$DOTFILES_BIN_DIR/common.sh"
 
 bootstrap_packages() {
   if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
-    local profile
+    local profile brewfile
+    local brewfiles=("$DOTFILES_ROOT/packages/Brewfile")
 
     if ! xcode-select -p >/dev/null 2>&1; then
       xcode-select --install
@@ -20,13 +21,16 @@ bootstrap_packages() {
     fi
 
     eval "$(/opt/homebrew/bin/brew shellenv || /usr/local/bin/brew shellenv)"
-    brew bundle --file="$DOTFILES_ROOT/packages/Brewfile"
     if profile="$(brew_profile_for_machine "$MACHINE")"; then
-      brew bundle --file="$DOTFILES_ROOT/packages/Brewfile.$profile"
+      brewfiles+=("$DOTFILES_ROOT/packages/Brewfile.$profile")
     else
       echo "No Homebrew profile for '${MACHINE:-unknown}' — installing shared packages only."
     fi
+    for brewfile in "${brewfiles[@]}"; do
+      brew bundle --file="$brewfile"
+    done
     brew upgrade
+    report_unmanaged_brew_packages "${brewfiles[@]}"
   else
     echo "Skipping Homebrew package bootstrap for linux."
   fi

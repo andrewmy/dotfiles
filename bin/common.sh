@@ -37,6 +37,30 @@ brew_profile_for_machine() {
   esac
 }
 
+report_unmanaged_brew_packages() {
+  local unmanaged_formulae unmanaged_casks
+
+  unmanaged_formulae="$(
+    comm -23 \
+      <(brew list --formula --installed-on-request | sort -u) \
+      <(sed -En 's/^[[:space:]]*brew[[:space:]]+"([^"]+)".*/\1/p' "$@" | sed 's|.*/||' | sort -u)
+  )"
+  unmanaged_casks="$(
+    comm -23 \
+      <(brew list --cask | sort -u) \
+      <(sed -En 's/^[[:space:]]*cask[[:space:]]+"([^"]+)".*/\1/p' "$@" | sed 's|.*/||' | sort -u)
+  )"
+
+  if [[ -n "$unmanaged_formulae" ]]; then
+    echo "Homebrew formulae not in active Brewfiles:"
+    printf '%s\n' "$unmanaged_formulae"
+  fi
+  if [[ -n "$unmanaged_casks" ]]; then
+    echo "Homebrew casks not in active Brewfiles:"
+    printf '%s\n' "$unmanaged_casks"
+  fi
+}
+
 set_platform_paths() {
   if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
     DOTFILES_VSCODE_USER_DIR="$HOME/Library/Application Support/Code - Insiders/User"
