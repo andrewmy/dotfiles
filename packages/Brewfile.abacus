@@ -1,0 +1,50 @@
+tap "krishkrosh/apps"
+
+# Standalone ad blocker
+cask "adguard"
+# Privacy-focused VPN client
+cask "adguard-vpn"
+# Tool to customise input devices and automate computer systems
+cask "bettertouchtool"
+# Scriptable scratchpad for developers
+cask "boop"
+# OpenAI's desktop app, including the Codex experience
+cask "chatgpt"
+# Remote desktop host from Google
+cask "chrome-remote-desktop-host"
+# OpenAI Codex terminal agent
+cask "codex"
+# Menu bar app for monitoring Codex usage
+cask "codexbar"
+# Disk usage utility
+cask "disk-inventory-x"
+# Cloud file synchronization client
+cask "dropbox"
+# Video tooling utility
+cask "flixtools"
+# Garmin device management and updates
+cask "garmin-express"
+# Free and open-source media player
+cask "iina"
+# Screen recorder and capture tool
+cask "kap"
+# Local-network file transfer tool
+cask "localsend"
+# Calculator and converter application
+cask "numi"
+# Knowledge base and Markdown editor
+cask "obsidian"
+# Audio editor and recorder
+cask "ocenaudio"
+# Microsoft cloud file synchronization client
+cask "onedrive"
+# PHP IDE by JetBrains
+cask "phpstorm"
+# Game platform required for Factorio
+cask "steam"
+# Mesh VPN based on WireGuard
+cask "tailscale-app"
+# Messaging app with a focus on speed and security
+cask "telegram"
+# BitTorrent client
+cask "transmission"

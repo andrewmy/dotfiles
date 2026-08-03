@@ -7,6 +7,8 @@ source "$DOTFILES_BIN_DIR/common.sh"
 
 bootstrap_packages() {
   if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
+    local profile
+
     if ! xcode-select -p >/dev/null 2>&1; then
       xcode-select --install
       echo "Install Command Line Tools, then re-run ./bin/bootstrap"
@@ -19,6 +21,11 @@ bootstrap_packages() {
 
     eval "$(/opt/homebrew/bin/brew shellenv || /usr/local/bin/brew shellenv)"
     brew bundle --file="$DOTFILES_ROOT/packages/Brewfile"
+    if profile="$(brew_profile_for_machine "$MACHINE")"; then
+      brew bundle --file="$DOTFILES_ROOT/packages/Brewfile.$profile"
+    else
+      echo "No Homebrew profile for '${MACHINE:-unknown}' — installing shared packages only."
+    fi
     brew upgrade
   else
     echo "Skipping Homebrew package bootstrap for linux."
@@ -93,6 +100,7 @@ link() {
 }
 
 resolve_target
+resolve_machine
 
 if [[ "$DOTFILES_TARGET" == "linux" ]]; then
   # shellcheck source=linux.sh
@@ -139,7 +147,6 @@ link "$HOME_CONFIG_ROOT/git/dotfiles.gitconfig" "$HOME/.config/git/dotfiles.gitc
 
 # Per-machine configs, keyed by LocalHostName (set via: sudo scutil --set LocalHostName <machine>)
 if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
-  MACHINE="$(scutil --get LocalHostName 2>/dev/null | tr '[:upper:]' '[:lower:]')"
   if [[ -f "$HOME_CONFIG_ROOT/git/$MACHINE.gitconfig" ]]; then
     link "$HOME_CONFIG_ROOT/git/$MACHINE.gitconfig" "$HOME/.config/git/machine.gitconfig"
   else
@@ -174,7 +181,3 @@ command -v tldr >/dev/null 2>&1 && tldr --update || true
 bootstrap_agent_skills
 
 ln -sfn "$HOME/.config/git/ignore" "$HOME/.gitignore"
-
-if [[ ! -f "$HOME/.zsh_secrets" ]]; then
-  echo "Create $HOME/.zsh_secrets manually (not in git)."
-fi

@@ -1,0 +1,4 @@
+# Anthropic's desktop chat app
+cask "claude"
+# Anthropic's terminal coding agent
+cask "claude-code"

@@ -22,6 +22,21 @@ resolve_target() {
   fi
 }
 
+resolve_machine() {
+  MACHINE=""
+  if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
+    MACHINE="$(scutil --get LocalHostName 2>/dev/null | tr '[:upper:]' '[:lower:]' || true)"
+  fi
+}
+
+brew_profile_for_machine() {
+  case "$1" in
+    abacus | suanpan) echo "abacus" ;;
+    salmon) echo "salmon" ;;
+    *) return 1 ;;
+  esac
+}
+
 set_platform_paths() {
   if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
     DOTFILES_VSCODE_USER_DIR="$HOME/Library/Application Support/Code - Insiders/User"
