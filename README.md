@@ -3,9 +3,9 @@
 My macOS and Linux dotfiles with a fast setup path:
 
 1. Auto-detect platform (`DOTFILES_TARGET=auto` by default)
-2. Install shared and machine-specific Homebrew packages on macOS
+2. Install shared and profile-specific Homebrew packages on macOS
 3. Symlink tracked config from `home/` into `$HOME`, with XDG files under `home/.config/` and app-specific exceptions under `app-config/`
-4. Keep secrets in local-only files and select tracked machine signing config by hostname
+4. Keep secrets in local-only files and select tracked machine profiles by hostname
 
 ## Setup on a target machine
 
@@ -26,12 +26,15 @@ exec zsh
 `bin/bootstrap` defaults to `DOTFILES_TARGET=auto` (detected from `uname -s`).
 You can override with `DOTFILES_TARGET=darwin` or `DOTFILES_TARGET=linux`.
 
-On macOS, it bootstraps Xcode Command Line Tools + Homebrew, then runs the shared
-`packages/Brewfile` and the profile selected by `LocalHostName`:
+On macOS, `LocalHostName` selects one profile for Homebrew, Git identity, and the
+1Password SSH agent. Profiles normally match the lowercase hostname, with one alias:
 
-- `abacus` and `suanpan` use `packages/Brewfile.abacus`
-- `salmon` uses `packages/Brewfile.salmon`
-- Unknown machines install shared packages only
+- `suanpan` uses the `abacus` profile
+- All other hostnames use a profile with the same name
+
+Bootstrap runs the shared `packages/Brewfile`, then `packages/Brewfile.<profile>`
+when present. Git and 1Password profile files are linked independently when present.
+Machines without a profile Brewfile install shared packages only.
 
 Suanpan temporarily follows Abacus; remove its mapping when Suanpan is retired.
 On Linux, it installs some core tools with `apt` (including `build-essential`), installs Neovim and eza from upstream binaries, installs Powerlevel10k manually, and manages symlinks.

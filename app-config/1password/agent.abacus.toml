@@ -1,4 +1,4 @@
-# 1Password SSH agent — abacus offers only its own key.
-# Add more [[ssh-keys]] blocks to expose other keys on this machine.
+# 1Password SSH agent for the abacus profile.
+# Add more [[ssh-keys]] blocks to expose other keys on this profile.
 [[ssh-keys]]
 item = "Abacus SSH Key"

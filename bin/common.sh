@@ -24,17 +24,12 @@ resolve_target() {
 
 resolve_machine() {
   MACHINE=""
+  MACHINE_PROFILE=""
   if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
     MACHINE="$(scutil --get LocalHostName 2>/dev/null | tr '[:upper:]' '[:lower:]' || true)"
+    MACHINE_PROFILE="$MACHINE"
+    [[ "$MACHINE" != "suanpan" ]] || MACHINE_PROFILE="abacus"
   fi
-}
-
-brew_profile_for_machine() {
-  case "$1" in
-    abacus | suanpan) echo "abacus" ;;
-    salmon) echo "salmon" ;;
-    *) return 1 ;;
-  esac
 }
 
 report_unmanaged_brew_packages() {

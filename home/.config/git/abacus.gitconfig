@@ -1,4 +1,4 @@
-# Machine-specific git config for abacus; linked to ~/.config/git/machine.gitconfig by bin/bootstrap.
+# Git config for the abacus profile; linked to ~/.config/git/machine.gitconfig by bin/bootstrap.
 [user]
 	name = Andrejs M-J
 	email = andrejs@gmail.com

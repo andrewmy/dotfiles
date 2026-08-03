@@ -1,5 +1,0 @@
-# Machine-specific git config for suanpan; linked to ~/.config/git/machine.gitconfig by bin/bootstrap.
-[user]
-	name = Andrejs M-J
-	email = andrejs@gmail.com
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMlAMHbHdn1SmtiNVpa+99zmhufDuPbHgHQ/DYcO9Ike

@@ -1,4 +1,4 @@
-# Machine-specific git config for salmon; linked to ~/.config/git/machine.gitconfig by bin/bootstrap.
+# Git config for the salmon profile; linked to ~/.config/git/machine.gitconfig by bin/bootstrap.
 [user]
 	name = Andrejs Mors-Jaroslavcevs
 	email = andrejs.mors@storyblok.com

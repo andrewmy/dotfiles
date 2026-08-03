@@ -7,7 +7,7 @@ source "$DOTFILES_BIN_DIR/common.sh"
 
 bootstrap_packages() {
   if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
-    local profile brewfile
+    local brewfile
     local brewfiles=("$DOTFILES_ROOT/packages/Brewfile")
 
     if ! xcode-select -p >/dev/null 2>&1; then
@@ -21,8 +21,8 @@ bootstrap_packages() {
     fi
 
     eval "$(/opt/homebrew/bin/brew shellenv || /usr/local/bin/brew shellenv)"
-    if profile="$(brew_profile_for_machine "$MACHINE")"; then
-      brewfiles+=("$DOTFILES_ROOT/packages/Brewfile.$profile")
+    if [[ -n "$MACHINE_PROFILE" && -f "$DOTFILES_ROOT/packages/Brewfile.$MACHINE_PROFILE" ]]; then
+      brewfiles+=("$DOTFILES_ROOT/packages/Brewfile.$MACHINE_PROFILE")
     else
       echo "No Homebrew profile for '${MACHINE:-unknown}' — installing shared packages only."
     fi
@@ -149,15 +149,15 @@ link "$HOME_CONFIG_ROOT/git/ignore" "$HOME/.config/git/ignore"
 link "$HOME_CONFIG_ROOT/git/allowed_signers" "$HOME/.config/git/allowed_signers"
 link "$HOME_CONFIG_ROOT/git/dotfiles.gitconfig" "$HOME/.config/git/dotfiles.gitconfig"
 
-# Per-machine configs, keyed by LocalHostName (set via: sudo scutil --set LocalHostName <machine>)
+# Profile configs selected by LocalHostName (set via: sudo scutil --set LocalHostName <machine>)
 if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
-  if [[ -f "$HOME_CONFIG_ROOT/git/$MACHINE.gitconfig" ]]; then
-    link "$HOME_CONFIG_ROOT/git/$MACHINE.gitconfig" "$HOME/.config/git/machine.gitconfig"
+  if [[ -f "$HOME_CONFIG_ROOT/git/$MACHINE_PROFILE.gitconfig" ]]; then
+    link "$HOME_CONFIG_ROOT/git/$MACHINE_PROFILE.gitconfig" "$HOME/.config/git/machine.gitconfig"
   else
-    echo "No per-machine Git config for '$MACHINE' — set LocalHostName or add home/.config/git/$MACHINE.gitconfig"
+    echo "No Git config for profile '${MACHINE_PROFILE:-unknown}' — set LocalHostName or add home/.config/git/$MACHINE_PROFILE.gitconfig"
   fi
-  if [[ -f "$APP_CONFIG_ROOT/1password/agent.$MACHINE.toml" ]]; then
-    link "$APP_CONFIG_ROOT/1password/agent.$MACHINE.toml" "$HOME/.config/1Password/ssh/agent.toml"
+  if [[ -f "$APP_CONFIG_ROOT/1password/agent.$MACHINE_PROFILE.toml" ]]; then
+    link "$APP_CONFIG_ROOT/1password/agent.$MACHINE_PROFILE.toml" "$HOME/.config/1Password/ssh/agent.toml"
   fi
 fi
 link "$HOME_CONFIG_ROOT/zed/settings.json" "$HOME/.config/zed/settings.json"

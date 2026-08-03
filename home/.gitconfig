@@ -1,6 +1,6 @@
 [include]
     path = ~/.gitconfig.local
-    # per-machine (signingkey etc.); linked from home/.config/git/<machine>.gitconfig by bin/bootstrap
+    # profile-specific (signingkey etc.); linked from home/.config/git/<profile>.gitconfig by bin/bootstrap
     path = ~/.config/git/machine.gitconfig
 
 # dotfiles repo commits with personal identity on every machine, wherever it's cloned
