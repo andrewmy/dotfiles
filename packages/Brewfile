@@ -103,6 +103,6 @@ cask "visual-studio-code@insiders"
 # REST, GraphQL and gRPC client
 cask "yaak"
 # YubiKey configuration utility
-cask "yubico-yubikey-manager"
+cask "yubico-authenticator"
 # High-performance multiplayer code editor
 cask "zed"
