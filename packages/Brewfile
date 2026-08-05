@@ -84,6 +84,7 @@ cask "discord"
 cask "flux-app"
 # GIT client
 cask "fork"
+cask "homerow"
 # Mouse utility to add gesture functions and smooth scrolling to 3rd party mice
 cask "mac-mouse-fix"
 # Fast Docker and Linux runtime
