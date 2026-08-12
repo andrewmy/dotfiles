@@ -93,8 +93,6 @@ cask "mac-mouse-fix"
 cask "orbstack"
 # Control your tools with a few keystrokes
 cask "raycast"
-# Move and resize windows using keyboard shortcuts or snap areas
-cask "rectangle"
 # Ruby on Rails IDE
 cask "rubymine"
 # Team communication and collaboration software

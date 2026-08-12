@@ -2,3 +2,6 @@
 cask "claude"
 # Anthropic's terminal coding agent
 cask "claude-code"
+# Move and resize windows using keyboard shortcuts or snap areas
+cask "rectangle"
+
