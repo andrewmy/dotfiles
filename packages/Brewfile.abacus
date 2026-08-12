@@ -4,8 +4,6 @@ tap "krishkrosh/apps"
 cask "adguard"
 # Privacy-focused VPN client
 cask "adguard-vpn"
-# Tool to customise input devices and automate computer systems
-cask "bettertouchtool"
 # Scriptable scratchpad for developers
 cask "boop"
 # OpenAI's desktop app, including the Codex experience
