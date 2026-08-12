@@ -6,11 +6,28 @@
       "npm": "@ai-sdk/openai-compatible",
       "name": "LM Studio",
       "options": {
-        "baseURL": "http://192.168.50.224:1234/v1"
+        "baseURL": "http://192.168.50.139:1234/v1"
       },
       "models": {
-        "qwen/qwen3.6-35b-a3b": {
-          "name": "Qwen 3.6 35B"
+        "qwen/qwen3.6-27b": {
+          "name": "Qwen 3.6 27B"
+        }
+      }
+    },
+    "ds4": {
+      "name": "ds4.c (local)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:8000/v1",
+        "apiKey": "dsv4-local"
+      },
+      "models": {
+        "deepseek-v4-flash": {
+          "name": "DeepSeek V4 Flash (ds4.c local)",
+          "limit": {
+            "context": 200000,
+            "output": 384000
+          }
         }
       }
     }
@@ -76,6 +93,13 @@
       "description": "Set a session-scoped goal and auto-continue until complete.",
       "template": "$ARGUMENTS",
       "agent": "build"
+    }
+  },
+  "agent": {
+    "ds4": {
+      "description": "DeepSeek V4 Flash served by local ds4-server",
+      "model": "ds4/deepseek-v4-flash",
+      "temperature": 0
     }
   }
 }
