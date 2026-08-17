@@ -38,7 +38,9 @@ cask "ocenaudio"
 cask "onedrive"
 # PHP IDE by JetBrains
 cask "phpstorm"
-# Game platform required for Factorio
+# Faster markdownlint
+cask "rumdl"
+# Game platform
 cask "steam"
 # Mesh VPN based on WireGuard
 cask "tailscale-app"
