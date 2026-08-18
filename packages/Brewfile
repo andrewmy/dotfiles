@@ -1,6 +1,6 @@
-tap "jez/formulae"
-tap "mike-engel/jwt-cli"
-tap "wickproject/wick"
+tap "jez/formulae", trusted: true
+tap "mike-engel/jwt-cli", trusted: true
+tap "wickproject/wick", trusted: true
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Utility to configure multi-display resolutions and arrangements

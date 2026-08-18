@@ -1,4 +1,9 @@
-tap "krishkrosh/apps"
+tap "krishkrosh/apps", trusted: true
+tap "ddalcu/mlx-serve", "https://github.com/ddalcu/mlx-serve", trusted: true
+
+brew "exiftool"
+brew "ffmpeg-full"
+brew "libheif"
 
 # Standalone ad blocker
 cask "adguard"
@@ -28,6 +33,7 @@ cask "iina"
 cask "kap"
 # Local-network file transfer tool
 cask "localsend"
+cask "mlx-core"
 # Calculator and converter application
 cask "numi"
 # Knowledge base and Markdown editor

@@ -21,7 +21,6 @@ bootstrap_packages() {
     fi
 
     eval "$(/opt/homebrew/bin/brew shellenv || /usr/local/bin/brew shellenv)"
-    brew trust arthur-ficial/tap deskflow/tap github/gh jez/formulae krishkrosh/apps mike-engel/jwt-cli robusta-dev/krr steipete/tap symfony-cli/tap wickproject/wick
     if [[ -n "$MACHINE_PROFILE" && -f "$DOTFILES_ROOT/packages/Brewfile.$MACHINE_PROFILE" ]]; then
       brewfiles+=("$DOTFILES_ROOT/packages/Brewfile.$MACHINE_PROFILE")
     else
