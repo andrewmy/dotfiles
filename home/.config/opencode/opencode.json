@@ -11,6 +11,9 @@
       "models": {
         "qwen/qwen3.6-27b": {
           "name": "Qwen 3.6 27B"
+        },
+        "Qwen3.8-27B-MLX-Serve-8bit": {
+          "name": "Qwen 3.8 27B"
         }
       }
     },
