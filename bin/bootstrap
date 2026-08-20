@@ -86,6 +86,16 @@ bootstrap_neovim() {
   nvim --headless -i NONE "+Lazy! restore" "+TSUpdate" +qa
 }
 
+bootstrap_touchid_sudo() {
+  # /etc/pam.d/sudo_local survives OS updates, unlike /etc/pam.d/sudo
+  grep -q '^auth.*pam_tid\.so' /etc/pam.d/sudo_local 2>/dev/null && return 0
+  if [[ -f /etc/pam.d/sudo_local.template ]]; then
+    echo "Enabling Touch ID for sudo (password prompt expected)…"
+    sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
+    sudo sed -i '' 's/^#auth/auth/' /etc/pam.d/sudo_local
+  fi
+}
+
 bootstrap_agent_skills() {
   "$DOTFILES_BIN_DIR/agent-skills" install
   "$DOTFILES_BIN_DIR/agent-skills" upgrade
@@ -112,6 +122,9 @@ if [[ "$DOTFILES_TARGET" == "linux" ]]; then
 fi
 
 set_platform_paths
+if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
+  bootstrap_touchid_sudo
+fi
 bootstrap_packages
 bootstrap_uv_tools
 
