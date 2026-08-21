@@ -1,6 +1,7 @@
 tap "jez/formulae", trusted: true
 tap "mike-engel/jwt-cli", trusted: true
 tap "wickproject/wick", trusted: true
+tap "y3owk1n/tap", trusted: true
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Utility to configure multi-display resolutions and arrangements
@@ -86,7 +87,6 @@ cask "discord"
 cask "flux-app"
 # GIT client
 cask "fork"
-cask "homerow"
 # Mouse utility to add gesture functions and smooth scrolling to 3rd party mice
 cask "mac-mouse-fix"
 # Fast Docker and Linux runtime
@@ -101,6 +101,8 @@ cask "slack"
 cask "visual-studio-code@insiders"
 # REST, GraphQL and gRPC client
 cask "yaak"
+# Mouseless clicking with both labels and grid
+cask "y3owk1n/tap/neru"
 # YubiKey configuration utility
 cask "yubico-authenticator"
 # High-performance multiplayer code editor
