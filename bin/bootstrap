@@ -101,6 +101,14 @@ bootstrap_agent_skills() {
   "$DOTFILES_BIN_DIR/agent-skills" upgrade
 }
 
+bootstrap_neru_services() {
+  command -v neru >/dev/null 2>&1 || return 0
+  # `status` exits 0 either way; it prints "Service not loaded" when missing
+  if neru services status 2>/dev/null | grep -qi "not loaded"; then
+    neru services install
+  fi
+}
+
 link() {
   local src="$1"
   local target="$2"
@@ -134,60 +142,10 @@ fi
 
 bootstrap_znap
 
-HOME_CONFIG_ROOT="$DOTFILES_ROOT/home/.config"
-APP_CONFIG_ROOT="$DOTFILES_ROOT/app-config"
-
-for f in .zshrc .zprofile .zshenv .p10k.zsh .gitconfig; do
-  link "$DOTFILES_ROOT/home/$f" "$HOME/$f"
-done
-link "$DOTFILES_ROOT/home/.zsh/functions" "$HOME/.zsh/functions"
-link "$DOTFILES_ROOT/home/.zsh/keybindings.zsh" "$HOME/.zsh/keybindings.zsh"
-
-link "$DOTFILES_ROOT/home/.claude/settings.json" "$HOME/.claude/settings.json"
-link "$DOTFILES_ROOT/home/.claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
-link "$DOTFILES_ROOT/home/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
-
-link "$DOTFILES_ROOT/home/.agents/AGENTS.md" "$HOME/.agents/AGENTS.md"
-link "$DOTFILES_ROOT/home/.agents/RTK.md" "$HOME/.agents/RTK.md"
-for skill_dir in "$DOTFILES_ROOT"/home/.agents/skills/*/; do
-  link "${skill_dir%/}" "$HOME/.agents/skills/$(basename "$skill_dir")"
-done
-
-link "$HOME_CONFIG_ROOT/nvim" "$HOME/.config/nvim"
-link "$HOME_CONFIG_ROOT/mc" "$HOME/.config/mc"
-link "$HOME_CONFIG_ROOT/gh/config.yml" "$HOME/.config/gh/config.yml"
-link "$HOME_CONFIG_ROOT/gh-dash/config.yml" "$HOME/.config/gh-dash/config.yml"
-link "$HOME_CONFIG_ROOT/htop/htoprc" "$HOME/.config/htop/htoprc"
-link "$HOME_CONFIG_ROOT/git/ignore" "$HOME/.config/git/ignore"
-link "$HOME_CONFIG_ROOT/git/allowed_signers" "$HOME/.config/git/allowed_signers"
-link "$HOME_CONFIG_ROOT/git/dotfiles.gitconfig" "$HOME/.config/git/dotfiles.gitconfig"
-
-# Profile configs selected by LocalHostName (set via: sudo scutil --set LocalHostName <machine>)
-if [[ "$DOTFILES_TARGET" == "darwin" ]]; then
-  if [[ -f "$HOME_CONFIG_ROOT/git/$MACHINE_PROFILE.gitconfig" ]]; then
-    link "$HOME_CONFIG_ROOT/git/$MACHINE_PROFILE.gitconfig" "$HOME/.config/git/machine.gitconfig"
-  else
-    echo "No Git config for profile '${MACHINE_PROFILE:-unknown}' — set LocalHostName or add home/.config/git/$MACHINE_PROFILE.gitconfig"
-  fi
-  if [[ -f "$APP_CONFIG_ROOT/1password/agent.$MACHINE_PROFILE.toml" ]]; then
-    link "$APP_CONFIG_ROOT/1password/agent.$MACHINE_PROFILE.toml" "$HOME/.config/1Password/ssh/agent.toml"
-  fi
-fi
-link "$HOME_CONFIG_ROOT/zed/settings.json" "$HOME/.config/zed/settings.json"
-link "$HOME_CONFIG_ROOT/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
+link_all link
 
 bootstrap_neovim
-
-link "$APP_CONFIG_ROOT/ghostty/config" "$DOTFILES_GHOSTTY_CONFIG_PATH"
-link "$APP_CONFIG_ROOT/vscode-insiders/User/settings.json" "$DOTFILES_VSCODE_USER_DIR/settings.json"
-
-if [[ -f "$APP_CONFIG_ROOT/vscode-insiders/User/keybindings.json" ]]; then
-  link "$APP_CONFIG_ROOT/vscode-insiders/User/keybindings.json" "$DOTFILES_VSCODE_USER_DIR/keybindings.json"
-fi
-
-if [[ -d "$APP_CONFIG_ROOT/vscode-insiders/User/snippets" ]]; then
-  link "$APP_CONFIG_ROOT/vscode-insiders/User/snippets" "$DOTFILES_VSCODE_USER_DIR/snippets"
-fi
+bootstrap_neru_services
 
 command -v tldr >/dev/null 2>&1 && tldr --update || true
 
@@ -196,5 +154,3 @@ command -v tldr >/dev/null 2>&1 && tldr --update || true
 "$DOTFILES_BIN_DIR/gh-extensions" install
 "$DOTFILES_BIN_DIR/gh-extensions" upgrade
 bootstrap_agent_skills
-
-ln -sfn "$HOME/.config/git/ignore" "$HOME/.gitignore"
