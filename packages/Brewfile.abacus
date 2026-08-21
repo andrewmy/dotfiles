@@ -4,6 +4,9 @@ tap "ddalcu/mlx-serve", "https://github.com/ddalcu/mlx-serve", trusted: true
 brew "exiftool"
 brew "ffmpeg-full"
 brew "libheif"
+brew "macmon"
+# Faster markdownlint
+brew "rumdl"
 
 # Standalone ad blocker
 cask "adguard"
@@ -44,8 +47,8 @@ cask "ocenaudio"
 cask "onedrive"
 # PHP IDE by JetBrains
 cask "phpstorm"
-# Faster markdownlint
-cask "rumdl"
+# Menubar power stats
+cask "stats"
 # Game platform
 cask "steam"
 # Mesh VPN based on WireGuard
