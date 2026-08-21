@@ -5,6 +5,7 @@ brew "exiftool"
 brew "ffmpeg-full"
 brew "libheif"
 brew "macmon"
+brew "mole"
 # Faster markdownlint
 brew "rumdl"
 
