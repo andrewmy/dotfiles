@@ -2,6 +2,7 @@ ccusage
 cline
 gitnexus
 opencode-ai
+pnpm
 @steipete/summarize
 typescript
 wrangler
