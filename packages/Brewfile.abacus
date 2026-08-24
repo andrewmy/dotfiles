@@ -58,3 +58,6 @@ cask "tailscale-app"
 cask "telegram"
 # BitTorrent client
 cask "transmission"
+# YubiKey configuration utility
+cask "yubico-authenticator"
+

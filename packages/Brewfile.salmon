@@ -1,7 +1,7 @@
 # Anthropic's desktop chat app
 cask "claude"
 # Anthropic's terminal coding agent
-cask "claude-code"
+cask "claude-code@latest"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
 
