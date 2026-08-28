@@ -89,20 +89,14 @@
   },
   "plugin": [
     "superpowers@git+https://github.com/obra/superpowers.git",
-    "opencode-goal-plugin"
+    "opencode-goal-plugin",
+    "@dietrichgebert/ponytail"
   ],
   "command": {
     "goal": {
       "description": "Set a session-scoped goal and auto-continue until complete.",
       "template": "$ARGUMENTS",
       "agent": "build"
-    }
-  },
-  "agent": {
-    "ds4": {
-      "description": "DeepSeek V4 Flash served by local ds4-server",
-      "model": "ds4/deepseek-v4-flash",
-      "temperature": 0
     }
   }
 }
