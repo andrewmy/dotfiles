@@ -24,7 +24,7 @@ cask "codex"
 # Menu bar app for monitoring Codex usage
 cask "codexbar"
 # Disk usage utility
-cask "disk-inventory-x"
+cask "grandperspective"
 # Cloud file synchronization client
 cask "dropbox"
 # Video tooling utility
