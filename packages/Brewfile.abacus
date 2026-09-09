@@ -1,6 +1,8 @@
 tap "krishkrosh/apps", trusted: true
 tap "ddalcu/mlx-serve", "https://github.com/ddalcu/mlx-serve", trusted: true
 
+# Exclude development dependencies from Time Machine backups
+brew "asimov", restart_service: :changed
 brew "exiftool"
 brew "ffmpeg-full"
 brew "libheif"
