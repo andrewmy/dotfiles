@@ -55,7 +55,7 @@ brew "silicon"
 # Programmatically correct mistyped console commands
 brew "thefuck"
 # Simplified example-based man pages
-brew "tldr"
+brew "tlrc"
 # Terminal multiplexer
 brew "tmux"
 # Extremely fast Python package installer and resolver, written in Rust
