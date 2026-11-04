@@ -1,3 +1,2 @@
 # uv tool install sources — one per line
 # Add PyPI package names or git URLs (git+https://...)
-mcp-compressor

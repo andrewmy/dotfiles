@@ -46,7 +46,6 @@
       "Bash(bin/rails generate:*)",
       "Bash(bin/rails db:migrate:*)",
       "Bash(npm view *)",
-      "Bash(mcp-compressor --version)",
       "WebSearch",
       "mcp__plugin_context7_context7__resolve-library-id",
       "mcp__plugin_context7_context7__query-docs",
