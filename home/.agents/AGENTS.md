@@ -3,12 +3,7 @@
 Source of truth for user-level agent behavior, shared across coding agents.
 Not auto-loaded by anything — each tool's global config must reference it
 (e.g. `@~/.agents/AGENTS.md` in `~/.claude/CLAUDE.md`, `instructions` in
-`~/.config/opencode/opencode.json` — opencode does not parse `@refs`, so it
-must list `~/.agents/RTK.md` explicitly).
-
-## Token-optimized CLI (rtk)
-
-@~/.agents/RTK.md
+`~/.config/opencode/opencode.json`).
 
 ## Web fetching
 
