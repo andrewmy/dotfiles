@@ -76,7 +76,6 @@ link_all() {
   "$L" "$DOTFILES_ROOT/home/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 
   "$L" "$DOTFILES_ROOT/home/.agents/AGENTS.md" "$HOME/.agents/AGENTS.md"
-  "$L" "$DOTFILES_ROOT/home/.agents/RTK.md" "$HOME/.agents/RTK.md"
   "$L" "$DOTFILES_ROOT/home/.agents/.skill-lock.json" "$HOME/.agents/.skill-lock.json"
   for skill_dir in "$DOTFILES_ROOT"/home/.agents/skills/*/; do
     "$L" "${skill_dir%/}" "$HOME/.agents/skills/$(basename "$skill_dir")"
