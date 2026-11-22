@@ -1,8 +1,8 @@
 ccusage
 cline
 gitnexus
-opencode-ai
 pnpm
+@opencode/cli
 @steipete/summarize
 typescript
 wrangler

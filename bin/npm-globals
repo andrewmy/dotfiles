@@ -114,7 +114,7 @@ install_from_manifest() {
     while IFS= read -r package; do
       [[ -n "$package" ]] || continue
       echo "Installing $package"
-      npm install -g "$package"
+      npm install -g --allow-scripts="$package" "$package"
     done <<< "$missing"
   fi
 
