@@ -68,6 +68,10 @@ These files are expected to be created manually on each machine:
     email = you@example.com
 ```
 
+- `~/.local/share/opencode/auth.json`
+  - OpenCode provider credentials; the tracked `home/.config/opencode/opencode.json` stays key-free
+  - Fill it with `/connect` in the OpenCode app (pick the provider, paste the key)
+
 - `~/.ssh/`, `~/.aws/`, `~/.kube/`, etc.
 
 

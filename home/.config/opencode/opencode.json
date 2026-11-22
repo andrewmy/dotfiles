@@ -18,21 +18,28 @@
           "name": "Qwen 3.8 27B"
         }
       }
-    },
-    "ds4": {
-      "name": "ds4.c (local)",
-      "npm": "@ai-sdk/openai-compatible",
-      "options": {
-        "baseURL": "http://127.0.0.1:8000/v1",
-        "apiKey": "dsv4-local"
+    }
+  },
+  "providers": {
+    "darkbloom": {
+      "name": "Darkbloom (local)",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "env": ["DARKBLOOM_API_KEY"],
+      "settings": {
+        "baseURL": "http://127.0.0.1:8000/v1"
       },
       "models": {
-        "deepseek-v4-flash": {
-          "name": "DeepSeek V4 Flash (ds4.c local)",
-          "limit": {
-            "context": 200000,
-            "output": 384000
-          }
+        "qwen3.5-35b-a3b": {
+          "name": "Qwen 3.5 35B A3B",
+          "limit": { "context": 262144, "output": 262144 }
+        },
+        "qwen3.6-35b-a3b-vl-mtp-mxfp8": {
+          "name": "Qwen 3.6 35B A3B VL",
+          "limit": { "context": 262144, "output": 262144 }
+        },
+        "ternary-bonsai-2-27b": {
+          "name": "Ternary Bonsai 2 27B",
+          "limit": { "context": 262144, "output": 262144 }
         }
       }
     }
