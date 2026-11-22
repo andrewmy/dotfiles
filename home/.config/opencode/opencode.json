@@ -84,6 +84,18 @@
         "serve",
         "--mcp"
       ]
+    },
+    "browse": {
+      "type": "local",
+      "command": [
+        "/Users/andr/.local/bin/browse",
+        "mcp"
+      ],
+      "cwd": "/Users/andr",
+      "pool": true,
+      "environment": {
+        "OPENCODE_BROWSER_RUNTIME": "auto-update"
+      }
     }
   },
   "plugin": [
